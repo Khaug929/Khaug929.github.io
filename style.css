@@ -2,12 +2,12 @@
    TOKENS
 ════════════════════════════════════════════════ */
 :root {
-  --bg:         #0A0F1E;
+  --bg:         #313131;
   --bg-card:    #111827;
   --bg-card-2:  #1A2332;
   --border:     #1E2A3A;
   --border-lit: #2A3D55;
-  --accent:     #00D4B8;
+  --accent:     #f07604;
   --accent-dim: rgba(0,212,184,.12);
   --text:       #EDF0F4;
   --text-muted: #7A8A9A;
