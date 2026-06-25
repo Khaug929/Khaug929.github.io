@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════
-   main.js  —  Portfolio interactions
+   main.js — Portfolio interactions (orange/charcoal)
 ════════════════════════════════════════════════ */
 
-/* ── Navbar: add .scrolled shadow on scroll ── */
+/* ── Navbar scroll state ── */
 const navbar = document.getElementById('navbar');
 if (navbar) {
   window.addEventListener('scroll', () => {
@@ -10,103 +10,117 @@ if (navbar) {
   }, { passive: true });
 }
 
-/* ── Mobile menu toggle ── */
+/* ── Mobile hamburger menu ── */
 function toggleMenu() {
   const menu = document.getElementById('nav-mobile');
-  if (menu) menu.classList.toggle('open');
+  if (!menu) return;
+  const isOpen = menu.classList.toggle('open');
+  const btn = document.querySelector('.nav-toggle');
+  if (btn) btn.setAttribute('aria-expanded', isOpen);
 }
 
-/* ── Hero dot-grid canvas ── */
-(function () {
-  const canvas = document.getElementById('grid-canvas');
-  if (!canvas) return;
+/* ── Mobile projects category sub-menu ── */
+function toggleMobileCat() {
+  const sub = document.getElementById('mobile-cat-menu');
+  if (sub) sub.classList.toggle('open');
+}
 
-  const ctx = canvas.getContext('2d');
-  const DOT = 1.2;   // dot radius px
-  const SPACE = 32;  // grid spacing px
-  const COLOR = 'rgba(0,212,184,';
-
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-    draw();
-  }
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    const cols = Math.ceil(canvas.width  / SPACE) + 1;
-    const rows = Math.ceil(canvas.height / SPACE) + 1;
-
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        // Fade out toward the bottom (parallax suggestion)
-        const yFrac = (r * SPACE) / canvas.height;
-        const alpha = 0.22 * (1 - yFrac * 0.7);
-        ctx.beginPath();
-        ctx.arc(c * SPACE, r * SPACE, DOT, 0, Math.PI * 2);
-        ctx.fillStyle = COLOR + alpha + ')';
-        ctx.fill();
-      }
+/* ── Close mobile menu when clicking outside ── */
+document.addEventListener('click', (e) => {
+  const mobile = document.getElementById('nav-mobile');
+  const toggle = document.querySelector('.nav-toggle');
+  if (mobile && mobile.classList.contains('open')) {
+    if (!mobile.contains(e.target) && !toggle.contains(e.target)) {
+      mobile.classList.remove('open');
     }
   }
+});
 
-  // Scroll: shift canvas up slightly (parallax)
-  window.addEventListener('scroll', () => {
-    const offset = window.scrollY * 0.25;
-    canvas.style.transform = `translateY(${offset}px)`;
-    // Fade canvas as user scrolls
-    canvas.style.opacity = Math.max(0, 0.45 - window.scrollY / 600);
-  }, { passive: true });
+/* ── Dropdown: close when focus leaves (keyboard accessibility) ── */
+document.querySelectorAll('.dropdown').forEach(dd => {
+  dd.addEventListener('focusout', (e) => {
+    if (!dd.contains(e.relatedTarget)) {
+      const menu = dd.querySelector('.dropdown-menu');
+      if (menu) {
+        menu.style.opacity = '';
+        menu.style.visibility = '';
+      }
+    }
+  });
+});
 
-  window.addEventListener('resize', resize, { passive: true });
-  resize();
+/* ── Active nav link highlighting ── */
+(function () {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+    const linkPage = href.split('?')[0].split('/').pop();
+    link.classList.toggle('active', linkPage === page);
+  });
 })();
 
-/* ── Scroll-reveal: fade sections in on scroll ── */
+/* ── Scroll-reveal animations ── */
 (function () {
   if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const els = document.querySelectorAll(
-    '.project-card, .update-card, .about-strip-inner, .stat, .proj-section, .proj-figure, .proj-results'
+  const targets = document.querySelectorAll(
+    '.project-card, .update-card, .focus-item, .hero-summary, .proj-section, .proj-figure, .proj-results'
   );
 
-  // Start invisible
-  els.forEach(el => {
+  targets.forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(18px)';
-    el.style.transition = 'opacity .45s ease, transform .45s ease';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity .4s ease, transform .4s ease';
+  });
+
+  /* stagger cards in grids */
+  document.querySelectorAll('.projects-grid .project-card').forEach((el, i) => {
+    el.dataset.stagger = i * 75;
+  });
+  document.querySelectorAll('.focus-item').forEach((el, i) => {
+    el.dataset.stagger = i * 50;
   });
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        // Slight stagger per card
-        const delay = (entry.target.dataset.delay || 0) + 'ms';
-        setTimeout(() => {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }, parseFloat(delay));
-        observer.unobserve(entry.target);
-      }
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const delay = parseInt(entry.target.dataset.stagger || 0);
+      setTimeout(() => {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }, delay);
+      observer.unobserve(entry.target);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 
-  // Stagger cards in grids
-  document.querySelectorAll('.projects-grid .project-card').forEach((el, i) => {
-    el.dataset.delay = i * 80;
-  });
-  document.querySelectorAll('.stat').forEach((el, i) => {
-    el.dataset.delay = i * 60;
-  });
-
-  els.forEach(el => observer.observe(el));
+  targets.forEach(el => observer.observe(el));
 })();
 
-/* ── Active nav link based on current page ── */
+/* ── Project filtering by URL category param (used on projects.html) ──
+   When a dropdown link like projects.html?cat=mechanical is clicked,
+   this script reads the param and shows only matching cards.         */
 (function () {
-  const path = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link').forEach(link => {
-    const href = link.getAttribute('href');
-    link.classList.toggle('active', href === path);
+  if (!window.location.search) return;
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get('cat');
+  if (!cat) return;
+
+  /* Highlight the matching filter button if the page has them */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
   });
+
+  /* Hide cards that don't match */
+  document.querySelectorAll('.project-card').forEach(card => {
+    const cardCat = (card.dataset.category || '').toLowerCase();
+    const match = catMatch(cardCat, cat);
+    card.style.display = match ? '' : 'none';
+  });
+
+  function catMatch(cardCat, filterCat) {
+    if (filterCat === 'all' || !filterCat) return true;
+    return cardCat === filterCat.toLowerCase();
+  }
 })();

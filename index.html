@@ -3,92 +3,198 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kristian Haugen — Aerospace Engineer</title>
+  <title>Your Name — Engineering Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- ═══════════════════════════════════════
-       NAVIGATION BAR
+       NAVBAR
   ════════════════════════════════════════ -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
+
       <a href="index.html" class="nav-logo">YN<span class="logo-dot">.</span></a>
-      <ul class="nav-links">
-        <li><a href="index.html" class="nav-link active">Home</a></li>
-        <li><a href="projects.html" class="nav-link">Projects</a></li>
-        <li><a href="updates.html" class="nav-link">Updates</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html"   class="nav-link active">Home</a></li>
+
+        <!-- ── PROJECTS DROPDOWN ──
+             HOW TO ADD A NEW CATEGORY:
+             1. Add a new <li> inside .dropdown-menu below
+             2. Set href to projects.html?cat=yourcategory
+             3. Add the matching category label to your project cards in projects.html
+             See CATEGORY-GUIDE.md for the full step-by-step. -->
+        <li class="dropdown">
+          <a href="projects.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+            Projects <span class="chevron" aria-hidden="true">▾</span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li role="none"><a href="projects.html"              role="menuitem" class="drop-link">All Projects</a></li>
+            <li role="none" class="drop-divider" aria-hidden="true"></li>
+            <li role="none"><a href="projects.html?cat=mechanical"  role="menuitem" class="drop-link">Mechanical</a></li>
+            <li role="none"><a href="projects.html?cat=electrical"  role="menuitem" class="drop-link">Electrical</a></li>
+            <li role="none"><a href="projects.html?cat=software"    role="menuitem" class="drop-link">Software</a></li>
+            <li role="none"><a href="projects.html?cat=systems"     role="menuitem" class="drop-link">Systems</a></li>
+            <!-- ADD NEW CATEGORIES HERE — copy the line above and change the cat= value and label -->
+          </ul>
+        </li>
+
+        <li><a href="updates.html"  class="nav-link">Updates</a></li>
+        <li><a href="about.html"    class="nav-link">About</a></li>
+        <li><a href="contact.html"  class="nav-link">Contact</a></li>
       </ul>
-      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </button>
+
+      <div class="nav-right">
+        <!-- Resume download button — replace # with path to your PDF -->
+        <a href="resume.pdf" class="btn btn-outline-sm" download>Resume ↓</a>
+        <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
     </div>
-    <!-- Mobile dropdown -->
-    <ul class="nav-mobile" id="nav-mobile">
-      <li><a href="index.html" class="nav-link" onclick="toggleMenu()">Home</a></li>
-      <li><a href="projects.html" class="nav-link" onclick="toggleMenu()">Projects</a></li>
-      <li><a href="updates.html" class="nav-link" onclick="toggleMenu()">Updates</a></li>
-      <li><a href="about.html" class="nav-link" onclick="toggleMenu()">About</a></li>
-      <li><a href="contact.html" class="nav-link" onclick="toggleMenu()">Contact</a></li>
-    </ul>
+
+    <!-- Mobile menu -->
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="index.html"   class="nav-link">Home</a>
+      <div class="mobile-dropdown">
+        <button class="nav-link mobile-cat-toggle" onclick="toggleMobileCat()">Projects ▾</button>
+        <div class="mobile-cat-menu" id="mobile-cat-menu">
+          <a href="projects.html"             class="drop-link">All Projects</a>
+          <a href="projects.html?cat=mechanical"  class="drop-link">Mechanical</a>
+          <a href="projects.html?cat=electrical"  class="drop-link">Electrical</a>
+          <a href="projects.html?cat=software"    class="drop-link">Software</a>
+          <a href="projects.html?cat=systems"     class="drop-link">Systems</a>
+          <!-- ADD NEW CATEGORIES HERE TOO -->
+        </div>
+      </div>
+      <a href="updates.html"  class="nav-link">Updates</a>
+      <a href="about.html"    class="nav-link">About</a>
+      <a href="contact.html"  class="nav-link">Contact</a>
+      <a href="resume.pdf" class="btn btn-outline-sm" download style="width:fit-content">Resume ↓</a>
+    </div>
   </nav>
 
   <!-- ═══════════════════════════════════════
-       HERO SECTION
+       HERO — split layout: photo left, text right
   ════════════════════════════════════════ -->
   <header class="hero">
-    <canvas id="grid-canvas" aria-hidden="true"></canvas>
-    <div class="hero-content">
-      <p class="hero-eyebrow">Engineering Portfolio</p>
-      <h1 class="hero-name">Your Name</h1>
-      <p class="hero-tagline">
-        Mechanical &amp; Systems Engineer.<br>
-        Building hardware that works in the real world.
-      </p>
-      <div class="hero-cta">
-        <a href="projects.html" class="btn btn-primary">View Projects</a>
-        <a href="about.html" class="btn btn-ghost">About Me</a>
+    <div class="hero-inner container">
+
+      <!-- LEFT: headshot(s) -->
+      <div class="hero-photos">
+        <!-- PRIMARY HEADSHOT
+             IMAGE: Replace src with your photo. Recommended: 600×800px portrait.
+             The frame has an orange corner accent built into CSS — no edits needed. -->
+        <div class="photo-primary">
+          <img
+            src="images/headshot.jpg"
+            alt="Photo of Your Name"
+            onerror="this.parentElement.classList.add('photo-placeholder')"
+          >
+        </div>
+
+        <!-- SECONDARY HEADSHOT (optional — a lab photo, field photo, etc.)
+             IMAGE: Remove this whole block if you only want one photo. -->
+        <div class="photo-secondary">
+          <img
+            src="images/headshot2.jpg"
+            alt="Your Name at work"
+            onerror="this.parentElement.classList.add('photo-placeholder')"
+          >
+          <!-- Label that floats over the secondary photo -->
+          <span class="photo-label">In the field</span>
+        </div>
       </div>
-    </div>
-    <div class="hero-scroll-hint" aria-hidden="true">
-      <span>scroll</span>
-      <div class="scroll-line"></div>
+
+      <!-- RIGHT: name, summary, links -->
+      <div class="hero-text">
+        <p class="hero-eyebrow">Engineering Portfolio</p>
+
+        <!-- EDIT: Your full name -->
+        <h1 class="hero-name">Your<br>Name</h1>
+
+        <!-- EDIT: Your title/discipline -->
+        <p class="hero-discipline">Mechanical &amp; Systems Engineer</p>
+
+        <!-- ── PROFESSIONAL SUMMARY ──
+             EDIT: 3–5 sentences. This is your elevator pitch.
+             What you do, what drives you, what kind of work you seek.
+             Visitors read this before deciding whether to look at your projects. -->
+        <div class="hero-summary">
+          <p>
+            I design and build [mechanical systems / embedded hardware / whatever fits]
+            with a focus on [your core value — reliability, efficiency, elegant simplicity].
+            My background spans [disciplines], with hands-on experience taking projects
+            from napkin sketch through fabrication and field testing.
+          </p>
+          <p>
+            Currently pursuing [role / open to opportunities] in [industry or location].
+            I'm drawn to work where the engineering decisions are real and the tolerances
+            actually matter.
+          </p>
+        </div>
+
+        <!-- ── PROFILE LINKS ── -->
+        <div class="hero-links">
+          <!-- Resume: replace resume.pdf with your actual file -->
+          <a href="resume.pdf" class="btn btn-primary" download>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download Resume
+          </a>
+
+          <!-- LinkedIn: replace # with your LinkedIn profile URL -->
+          <a href="#" class="btn btn-ghost" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+
+          <!-- GitHub: replace # with your GitHub URL -->
+          <a href="#" class="btn btn-ghost" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+
+          <a href="projects.html" class="btn btn-ghost">View Projects →</a>
+        </div>
+      </div>
     </div>
   </header>
 
   <!-- ═══════════════════════════════════════
-       ABOUT STRIP
+       SKILLS / FOCUS STRIP
   ════════════════════════════════════════ -->
-  <section class="about-strip">
+  <section class="focus-strip">
     <div class="container">
-      <div class="about-strip-inner">
-        <div class="about-strip-text">
-          <h2 class="section-label">Who I am</h2>
-          <p class="about-bio">
-            <!-- EDIT: Replace this with 2–3 sentences about yourself -->
-            I'm an engineer focused on [your specialty here]. I work across
-            [domains/tools/industries], with a particular interest in
-            [what makes your work unique]. Currently based in [Your City].
-          </p>
+      <div class="focus-inner">
+        <!-- EDIT: Replace these with your actual areas -->
+        <div class="focus-item">
+          <span class="focus-icon" aria-hidden="true">⚙</span>
+          <span class="focus-label">Mechanical Design</span>
         </div>
-        <div class="about-strip-stats">
-          <div class="stat">
-            <span class="stat-num">12</span>
-            <span class="stat-label">Projects completed</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">3+</span>
-            <span class="stat-label">Years experience</span>
-          </div>
-          <div class="stat">
-            <span class="stat-num">4</span>
-            <span class="stat-label">Fields of focus</span>
-          </div>
+        <div class="focus-divider" aria-hidden="true"></div>
+        <div class="focus-item">
+          <span class="focus-icon" aria-hidden="true">⚡</span>
+          <span class="focus-label">Electrical Systems</span>
+        </div>
+        <div class="focus-divider" aria-hidden="true"></div>
+        <div class="focus-item">
+          <span class="focus-icon" aria-hidden="true">◈</span>
+          <span class="focus-label">CAD &amp; Simulation</span>
+        </div>
+        <div class="focus-divider" aria-hidden="true"></div>
+        <div class="focus-item">
+          <span class="focus-icon" aria-hidden="true">⬡</span>
+          <span class="focus-label">Prototyping</span>
+        </div>
+        <div class="focus-divider" aria-hidden="true"></div>
+        <div class="focus-item">
+          <span class="focus-icon" aria-hidden="true">◎</span>
+          <span class="focus-label">Systems Integration</span>
         </div>
       </div>
     </div>
@@ -97,27 +203,26 @@
   <!-- ═══════════════════════════════════════
        FEATURED PROJECTS
   ════════════════════════════════════════ -->
-  <section class="projects-section" id="projects">
+  <section class="projects-section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Featured Projects</h2>
+        <div>
+          <p class="section-eyebrow">Work</p>
+          <h2 class="section-title">Featured Projects</h2>
+        </div>
         <a href="projects.html" class="see-all-link">See all →</a>
       </div>
 
       <div class="projects-grid">
 
-        <!-- ── PROJECT CARD 1 ── -->
-        <!-- IMAGE POSITION: Replace "images/project1.jpg" with your image path.
-             Recommended size: 800×500px (16:10 ratio). Place images in the /images/ folder. -->
-        <article class="project-card featured">
+        <!-- ── FEATURED CARD (wide) ── -->
+        <!-- IMAGE: 800×500px recommended. Save to images/project1.jpg -->
+        <article class="project-card featured" data-category="mechanical">
           <a href="project-template.html" class="card-image-link">
             <div class="card-image">
-              <img
-                src="images/project1.jpg"
-                alt="Brief description of project 1 image"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              >
-              <span class="card-tag">Mechanical</span>
+              <img src="images/project1.jpg" alt="Project one overview"
+                   onerror="this.parentElement.classList.add('img-placeholder')">
+              <span class="card-cat">Mechanical</span>
             </div>
           </a>
           <div class="card-body">
@@ -127,7 +232,6 @@
             </div>
             <h3 class="card-title"><a href="project-template.html">Project Title One</a></h3>
             <p class="card-desc">
-              <!-- EDIT: Short description (1–2 sentences) of what this project is and what it achieved -->
               A short description of what this project does and why it matters.
               Mention the key outcome or technical challenge solved.
             </p>
@@ -139,16 +243,13 @@
           </div>
         </article>
 
-        <!-- ── PROJECT CARD 2 ── -->
-        <article class="project-card">
+        <!-- ── CARD 2 ── -->
+        <article class="project-card" data-category="electrical">
           <a href="project-template.html" class="card-image-link">
             <div class="card-image">
-              <img
-                src="images/project2.jpg"
-                alt="Brief description of project 2 image"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              >
-              <span class="card-tag">Systems</span>
+              <img src="images/project2.jpg" alt="Project two overview"
+                   onerror="this.parentElement.classList.add('img-placeholder')">
+              <span class="card-cat">Electrical</span>
             </div>
           </a>
           <div class="card-body">
@@ -157,28 +258,22 @@
               <span class="card-status status-progress">In Progress</span>
             </div>
             <h3 class="card-title"><a href="project-template.html">Project Title Two</a></h3>
-            <p class="card-desc">
-              Description of your second project. What problem did it solve?
-              What tools or methods did you use?
-            </p>
+            <p class="card-desc">Description of your second project. What problem did it solve?</p>
             <div class="card-tags">
-              <span class="tag">Python</span>
-              <span class="tag">Sensors</span>
-              <span class="tag">Control</span>
+              <span class="tag">PCB</span>
+              <span class="tag">Embedded</span>
+              <span class="tag">Power</span>
             </div>
           </div>
         </article>
 
-        <!-- ── PROJECT CARD 3 ── -->
-        <article class="project-card">
+        <!-- ── CARD 3 ── -->
+        <article class="project-card" data-category="software">
           <a href="project-template.html" class="card-image-link">
             <div class="card-image">
-              <img
-                src="images/project3.jpg"
-                alt="Brief description of project 3 image"
-                onerror="this.parentElement.classList.add('img-placeholder')"
-              >
-              <span class="card-tag">Electrical</span>
+              <img src="images/project3.jpg" alt="Project three overview"
+                   onerror="this.parentElement.classList.add('img-placeholder')">
+              <span class="card-cat">Software</span>
             </div>
           </a>
           <div class="card-body">
@@ -187,49 +282,42 @@
               <span class="card-status status-complete">Completed</span>
             </div>
             <h3 class="card-title"><a href="project-template.html">Project Title Three</a></h3>
-            <p class="card-desc">
-              Description of your third project. Keep it to the core idea
-              and one standout technical detail.
-            </p>
+            <p class="card-desc">Description of your third project. Core idea and one standout detail.</p>
             <div class="card-tags">
-              <span class="tag">PCB</span>
-              <span class="tag">Arduino</span>
-              <span class="tag">Power</span>
+              <span class="tag">Python</span>
+              <span class="tag">Sensors</span>
+              <span class="tag">Control</span>
             </div>
           </div>
         </article>
 
-        <!-- ── ADD MORE PROJECT CARDS BELOW by copying the block above ── -->
-
-      </div>
+      </div><!-- /projects-grid -->
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════
-       LATEST UPDATE (design log / blog)
+       LATEST UPDATE
   ════════════════════════════════════════ -->
   <section class="updates-section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Latest Update</h2>
+        <div>
+          <p class="section-eyebrow">Log</p>
+          <h2 class="section-title">Latest Update</h2>
+        </div>
         <a href="updates.html" class="see-all-link">All updates →</a>
       </div>
       <div class="update-card">
-        <!-- IMAGE POSITION: Optional update/blog header image. 1200×400px recommended. -->
         <div class="update-image">
-          <img
-            src="images/update1.jpg"
-            alt="Update header image"
-            onerror="this.parentElement.classList.add('img-placeholder')"
-          >
+          <img src="images/update1.jpg" alt="Update image"
+               onerror="this.parentElement.classList.add('img-placeholder')">
         </div>
         <div class="update-body">
           <span class="update-date">June 2025</span>
           <h3 class="update-title">Design Update: What I'm Currently Working On</h3>
           <p class="update-excerpt">
-            <!-- EDIT: A short teaser for your latest update or design note -->
             A short teaser about what you've been working on, a technical decision
-            you made recently, or something you learned. Keep it to 2–3 sentences here.
+            you made recently, or something you learned.
           </p>
           <a href="updates.html" class="btn btn-ghost btn-sm">Read more →</a>
         </div>
@@ -245,9 +333,9 @@
       <div class="footer-inner">
         <span class="footer-name">Your Name</span>
         <div class="footer-links">
-          <!-- EDIT: Replace # with your actual profile URLs -->
-          <a href="#" class="footer-link" target="_blank" rel="noopener">GitHub</a>
-          <a href="#" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="#"            class="footer-link" target="_blank" rel="noopener">GitHub</a>
+          <a href="#"            class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="resume.pdf"   class="footer-link" download>Resume</a>
           <a href="contact.html" class="footer-link">Contact</a>
         </div>
         <span class="footer-copy">&copy; 2025</span>
