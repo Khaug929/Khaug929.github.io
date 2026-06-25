@@ -4,10 +4,257 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Name — Engineering Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Your Name</h1>
-  <p>Mechanical / Electrical / Software Engineer</p>
+
+  <!-- ═══════════════════════════════════════
+       NAVIGATION BAR
+  ════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">YN<span class="logo-dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="projects.html" class="nav-link">Projects</a></li>
+        <li><a href="updates.html" class="nav-link">Updates</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <!-- Mobile dropdown -->
+    <ul class="nav-mobile" id="nav-mobile">
+      <li><a href="index.html" class="nav-link" onclick="toggleMenu()">Home</a></li>
+      <li><a href="projects.html" class="nav-link" onclick="toggleMenu()">Projects</a></li>
+      <li><a href="updates.html" class="nav-link" onclick="toggleMenu()">Updates</a></li>
+      <li><a href="about.html" class="nav-link" onclick="toggleMenu()">About</a></li>
+      <li><a href="contact.html" class="nav-link" onclick="toggleMenu()">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════ -->
+  <header class="hero">
+    <canvas id="grid-canvas" aria-hidden="true"></canvas>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Engineering Portfolio</p>
+      <h1 class="hero-name">Your Name</h1>
+      <p class="hero-tagline">
+        Mechanical &amp; Systems Engineer.<br>
+        Building hardware that works in the real world.
+      </p>
+      <div class="hero-cta">
+        <a href="projects.html" class="btn btn-primary">View Projects</a>
+        <a href="about.html" class="btn btn-ghost">About Me</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════
+       ABOUT STRIP
+  ════════════════════════════════════════ -->
+  <section class="about-strip">
+    <div class="container">
+      <div class="about-strip-inner">
+        <div class="about-strip-text">
+          <h2 class="section-label">Who I am</h2>
+          <p class="about-bio">
+            <!-- EDIT: Replace this with 2–3 sentences about yourself -->
+            I'm an engineer focused on [your specialty here]. I work across
+            [domains/tools/industries], with a particular interest in
+            [what makes your work unique]. Currently based in [Your City].
+          </p>
+        </div>
+        <div class="about-strip-stats">
+          <div class="stat">
+            <span class="stat-num">12</span>
+            <span class="stat-label">Projects completed</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">3+</span>
+            <span class="stat-label">Years experience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">4</span>
+            <span class="stat-label">Fields of focus</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FEATURED PROJECTS
+  ════════════════════════════════════════ -->
+  <section class="projects-section" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Featured Projects</h2>
+        <a href="projects.html" class="see-all-link">See all →</a>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- ── PROJECT CARD 1 ── -->
+        <!-- IMAGE POSITION: Replace "images/project1.jpg" with your image path.
+             Recommended size: 800×500px (16:10 ratio). Place images in the /images/ folder. -->
+        <article class="project-card featured">
+          <a href="project-template.html" class="card-image-link">
+            <div class="card-image">
+              <img
+                src="images/project1.jpg"
+                alt="Brief description of project 1 image"
+                onerror="this.parentElement.classList.add('img-placeholder')"
+              >
+              <span class="card-tag">Mechanical</span>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-date">2024</span>
+              <span class="card-status status-complete">Completed</span>
+            </div>
+            <h3 class="card-title"><a href="project-template.html">Project Title One</a></h3>
+            <p class="card-desc">
+              <!-- EDIT: Short description (1–2 sentences) of what this project is and what it achieved -->
+              A short description of what this project does and why it matters.
+              Mention the key outcome or technical challenge solved.
+            </p>
+            <div class="card-tags">
+              <span class="tag">CAD</span>
+              <span class="tag">FEA</span>
+              <span class="tag">Prototyping</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT CARD 2 ── -->
+        <article class="project-card">
+          <a href="project-template.html" class="card-image-link">
+            <div class="card-image">
+              <img
+                src="images/project2.jpg"
+                alt="Brief description of project 2 image"
+                onerror="this.parentElement.classList.add('img-placeholder')"
+              >
+              <span class="card-tag">Systems</span>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-date">2024</span>
+              <span class="card-status status-progress">In Progress</span>
+            </div>
+            <h3 class="card-title"><a href="project-template.html">Project Title Two</a></h3>
+            <p class="card-desc">
+              Description of your second project. What problem did it solve?
+              What tools or methods did you use?
+            </p>
+            <div class="card-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Sensors</span>
+              <span class="tag">Control</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── PROJECT CARD 3 ── -->
+        <article class="project-card">
+          <a href="project-template.html" class="card-image-link">
+            <div class="card-image">
+              <img
+                src="images/project3.jpg"
+                alt="Brief description of project 3 image"
+                onerror="this.parentElement.classList.add('img-placeholder')"
+              >
+              <span class="card-tag">Electrical</span>
+            </div>
+          </a>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="card-date">2023</span>
+              <span class="card-status status-complete">Completed</span>
+            </div>
+            <h3 class="card-title"><a href="project-template.html">Project Title Three</a></h3>
+            <p class="card-desc">
+              Description of your third project. Keep it to the core idea
+              and one standout technical detail.
+            </p>
+            <div class="card-tags">
+              <span class="tag">PCB</span>
+              <span class="tag">Arduino</span>
+              <span class="tag">Power</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ── ADD MORE PROJECT CARDS BELOW by copying the block above ── -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       LATEST UPDATE (design log / blog)
+  ════════════════════════════════════════ -->
+  <section class="updates-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Latest Update</h2>
+        <a href="updates.html" class="see-all-link">All updates →</a>
+      </div>
+      <div class="update-card">
+        <!-- IMAGE POSITION: Optional update/blog header image. 1200×400px recommended. -->
+        <div class="update-image">
+          <img
+            src="images/update1.jpg"
+            alt="Update header image"
+            onerror="this.parentElement.classList.add('img-placeholder')"
+          >
+        </div>
+        <div class="update-body">
+          <span class="update-date">June 2025</span>
+          <h3 class="update-title">Design Update: What I'm Currently Working On</h3>
+          <p class="update-excerpt">
+            <!-- EDIT: A short teaser for your latest update or design note -->
+            A short teaser about what you've been working on, a technical decision
+            you made recently, or something you learned. Keep it to 2–3 sentences here.
+          </p>
+          <a href="updates.html" class="btn btn-ghost btn-sm">Read more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-name">Your Name</span>
+        <div class="footer-links">
+          <!-- EDIT: Replace # with your actual profile URLs -->
+          <a href="#" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+          <a href="#" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+        <span class="footer-copy">&copy; 2025</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>

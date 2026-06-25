@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- EDIT: Update this title for each project -->
+  <title>Project Title — Your Name</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body>
+
+  <!-- NAVBAR (same on every page) -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">YN<span class="logo-dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="projects.html" class="nav-link active">Projects</a></li>
+        <li><a href="updates.html" class="nav-link">Updates</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <ul class="nav-mobile" id="nav-mobile">
+      <li><a href="index.html"    class="nav-link" onclick="toggleMenu()">Home</a></li>
+      <li><a href="projects.html" class="nav-link" onclick="toggleMenu()">Projects</a></li>
+      <li><a href="updates.html"  class="nav-link" onclick="toggleMenu()">Updates</a></li>
+      <li><a href="about.html"    class="nav-link" onclick="toggleMenu()">About</a></li>
+      <li><a href="contact.html"  class="nav-link" onclick="toggleMenu()">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="project-main">
+
+    <!-- ═══════════════════════
+         HERO IMAGE (full width)
+    ════════════════════════ -->
+    <!-- IMAGE POSITION: Hero banner. Recommended size: 1600×700px.
+         Replace "images/project1-hero.jpg" with your image file. -->
+    <div class="project-hero">
+      <img
+        src="images/project1-hero.jpg"
+        alt="Hero image for Project Title"
+        onerror="this.parentElement.classList.add('img-placeholder-hero')"
+      >
+      <div class="project-hero-overlay">
+        <div class="container">
+          <div class="project-hero-text">
+            <a href="projects.html" class="back-link">← Projects</a>
+            <span class="card-tag" style="position:static;margin-bottom:.75rem;display:inline-block">Mechanical</span>
+            <!-- EDIT: Project title -->
+            <h1 class="project-title">Project Title One</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="project-layout">
+
+        <!-- ═══════════════════════
+             SIDEBAR (project info)
+        ════════════════════════ -->
+        <aside class="project-sidebar">
+          <div class="sidebar-block">
+            <span class="sidebar-label">Status</span>
+            <span class="card-status status-complete" style="display:inline-block">Completed</span>
+          </div>
+          <div class="sidebar-block">
+            <span class="sidebar-label">Year</span>
+            <span class="sidebar-value">2024</span>
+          </div>
+          <div class="sidebar-block">
+            <span class="sidebar-label">Duration</span>
+            <span class="sidebar-value">3 months</span>
+          </div>
+          <div class="sidebar-block">
+            <span class="sidebar-label">Role</span>
+            <span class="sidebar-value">Lead Engineer</span>
+          </div>
+          <div class="sidebar-block">
+            <span class="sidebar-label">Tools & Methods</span>
+            <div class="card-tags" style="margin-top:.5rem">
+              <span class="tag">SolidWorks</span>
+              <span class="tag">FEA</span>
+              <span class="tag">Machining</span>
+              <span class="tag">Testing</span>
+            </div>
+          </div>
+          <!-- EDIT: Add a link to GitHub, report, demo, etc. if available -->
+          <div class="sidebar-block">
+            <span class="sidebar-label">Links</span>
+            <a href="#" class="sidebar-link" target="_blank" rel="noopener">GitHub →</a>
+            <a href="#" class="sidebar-link" target="_blank" rel="noopener">Full Report (PDF) →</a>
+          </div>
+        </aside>
+
+        <!-- ═══════════════════════
+             MAIN CONTENT
+        ════════════════════════ -->
+        <article class="project-content">
+
+          <!-- Overview -->
+          <section class="proj-section">
+            <h2 class="proj-h2">Overview</h2>
+            <p>
+              <!-- EDIT: 2–4 sentences. What is this project? What problem does it solve? -->
+              Describe your project here. What was the goal, and why did it matter?
+              Give just enough context that someone unfamiliar with your field can follow along.
+              What makes this project interesting or challenging?
+            </p>
+          </section>
+
+          <!-- ── INLINE IMAGE (wide) ──
+               IMAGE POSITION: Full-width image inside the article.
+               Recommended: 1000×560px. Replace src below. -->
+          <figure class="proj-figure">
+            <img
+              src="images/project1-overview.jpg"
+              alt="Overview diagram or photo of the project"
+              onerror="this.parentElement.classList.add('img-placeholder-fig')"
+            >
+            <figcaption>Caption: What is shown in this image, and why is it relevant.</figcaption>
+          </figure>
+
+          <!-- Problem / Background -->
+          <section class="proj-section">
+            <h2 class="proj-h2">Problem &amp; Background</h2>
+            <p>
+              <!-- EDIT: What were the constraints, requirements, or context? -->
+              Explain the engineering challenge in more depth here. What constraints
+              were you working within — weight limits, budget, material properties, timelines?
+              What did existing solutions get wrong that yours needed to address?
+            </p>
+          </section>
+
+          <!-- ── SIDE-BY-SIDE IMAGES ──
+               IMAGE POSITION: Two images side by side.
+               Recommended: 600×400px each. -->
+          <div class="proj-image-grid">
+            <figure class="proj-figure">
+              <img
+                src="images/project1-detail-a.jpg"
+                alt="Detail A — describe what is shown"
+                onerror="this.parentElement.classList.add('img-placeholder-fig')"
+              >
+              <figcaption>Left image caption.</figcaption>
+            </figure>
+            <figure class="proj-figure">
+              <img
+                src="images/project1-detail-b.jpg"
+                alt="Detail B — describe what is shown"
+                onerror="this.parentElement.classList.add('img-placeholder-fig')"
+              >
+              <figcaption>Right image caption.</figcaption>
+            </figure>
+          </div>
+
+          <!-- Design Process -->
+          <section class="proj-section">
+            <h2 class="proj-h2">Design Process</h2>
+            <p>
+              <!-- EDIT: How did you approach solving the problem? -->
+              Walk through your design thinking. What iterations did you go through?
+              What trade-offs did you evaluate? This is where you show how you think as an engineer —
+              not just what the final solution is, but how you got there.
+            </p>
+
+            <!-- Key decisions list — optional, remove if not needed -->
+            <ul class="proj-list">
+              <li><strong>Decision 1:</strong> Why you chose material/method X over Y.</li>
+              <li><strong>Decision 2:</strong> How you resolved a specific constraint.</li>
+              <li><strong>Decision 3:</strong> A tradeoff you made and how you evaluated it.</li>
+            </ul>
+          </section>
+
+          <!-- ── SINGLE PORTRAIT / TALL IMAGE ──
+               IMAGE POSITION: Taller image (e.g. CAD screenshot, test rig, assembly).
+               Recommended: 800×600px. -->
+          <figure class="proj-figure">
+            <img
+              src="images/project1-process.jpg"
+              alt="Process or design image"
+              onerror="this.parentElement.classList.add('img-placeholder-fig')"
+            >
+            <figcaption>Caption: Design sketch, CAD model, or process photo.</figcaption>
+          </figure>
+
+          <!-- Results -->
+          <section class="proj-section">
+            <h2 class="proj-h2">Results &amp; Outcomes</h2>
+            <p>
+              <!-- EDIT: What did you achieve? Quantify where possible. -->
+              What were the measured or observed results? Use numbers where you can:
+              efficiency gains, weight savings, load capacity, test scores, etc.
+              What worked well, and what would you change next time?
+            </p>
+          </section>
+
+          <!-- Key results callout (optional) -->
+          <div class="proj-results">
+            <div class="proj-result-item">
+              <span class="proj-result-num">↑ 34%</span>
+              <span class="proj-result-label">Efficiency gain</span>
+            </div>
+            <div class="proj-result-item">
+              <span class="proj-result-num">↓ 18%</span>
+              <span class="proj-result-label">Weight reduction</span>
+            </div>
+            <div class="proj-result-item">
+              <span class="proj-result-num">3×</span>
+              <span class="proj-result-label">Faster assembly</span>
+            </div>
+          </div>
+
+          <!-- ── FINAL / RESULT IMAGE ──
+               IMAGE POSITION: Final built/tested product photo.
+               Recommended: 1000×660px. -->
+          <figure class="proj-figure">
+            <img
+              src="images/project1-final.jpg"
+              alt="Final result or finished prototype"
+              onerror="this.parentElement.classList.add('img-placeholder-fig')"
+            >
+            <figcaption>Caption: Final built prototype / test results / deployment.</figcaption>
+          </figure>
+
+          <!-- Reflection -->
+          <section class="proj-section">
+            <h2 class="proj-h2">Reflection</h2>
+            <p>
+              <!-- EDIT: What did you learn? What would you do differently? -->
+              Briefly reflect on the project. What was the biggest technical challenge?
+              What did you learn that you'll carry into future work?
+              What would a Version 2 look like?
+            </p>
+          </section>
+
+          <!-- Navigation between projects -->
+          <div class="proj-nav">
+            <a href="project-template.html" class="proj-nav-btn">← Previous project</a>
+            <a href="projects.html"          class="proj-nav-btn">All projects</a>
+            <a href="project-template.html" class="proj-nav-btn">Next project →</a>
+          </div>
+
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-name">Your Name</span>
+        <div class="footer-links">
+          <a href="#" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+          <a href="#" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+        <span class="footer-copy">&copy; 2025</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
