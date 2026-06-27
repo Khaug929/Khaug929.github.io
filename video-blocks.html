@@ -1,0 +1,150 @@
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  VIDEO BLOCKS — Drop-in snippets for project-template.html      ║
+║                                                                  ║
+║  SUPPORTED FORMATS                                               ║
+║  • .mp4  — works in every browser, no conversion needed         ║
+║  • .mov  — works in Safari; convert to .mp4 for Chrome/Firefox  ║
+║  • .webm — smallest file size, excellent quality (from ffmpeg)  ║
+║                                                                  ║
+║  FOLDER: put your video files in /videos/ next to index.html    ║
+║                                                                  ║
+║  HOW TO USE                                                      ║
+║  Copy any block below and paste it anywhere inside              ║
+║  <article class="project-content"> in project-template.html.    ║
+║  The blocks slot in the same spots as proj-figure image blocks. ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     VARIANT 1 — FULL-WIDTH SINGLE VIDEO
+     Use for: demo reel, test run, build timelapse, main result clip
+     Place: anywhere between <section> blocks, same as a proj-figure
+     ════════════════════════════════════════════════════════════════ -->
+
+<figure class="proj-figure proj-video-figure">
+
+  <div class="proj-video-wrap">
+    <!--
+      src ORDER MATTERS — browser uses the first format it can play.
+      Put .webm first (best quality/size), .mp4 second (widest support).
+      Delete any <source> line whose file you don't have.
+
+      EDIT: replace the filenames with your actual video files.
+      All files go in the /videos/ folder.
+    -->
+    <video
+      controls
+      preload="metadata"
+      poster="images/project1-video-thumb.jpg"
+      aria-label="Demo video: describe what the viewer will see"
+    >
+      <source src="videos/project1-demo.webm" type="video/webm">
+      <source src="videos/project1-demo.mp4"  type="video/mp4">
+      <!-- .mov fallback — Safari only; omit if you have an .mp4 -->
+      <source src="videos/project1-demo.mov"  type="video/quicktime">
+      <!-- Shown if the browser can't play any format -->
+      <p>
+        Your browser can't play this video.
+        <a href="videos/project1-demo.mp4" download>Download it instead.</a>
+      </p>
+    </video>
+  </div>
+
+  <!-- EDIT: describe what the video shows -->
+  <figcaption>
+    <span class="vid-label">▶ Video</span>
+    Caption: What this demo shows — test conditions, speed, key result visible in the clip.
+  </figcaption>
+
+</figure>
+<!-- END VARIANT 1 -->
+
+
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     VARIANT 2 — SIDE-BY-SIDE VIDEO PAIR
+     Use for: before/after comparison, two test conditions,
+              prototype v1 vs v2, two camera angles of the same test
+     Place: same spot as .proj-image-grid (the two-column image block)
+     ════════════════════════════════════════════════════════════════ -->
+
+<div class="proj-image-grid proj-video-grid">
+
+  <figure class="proj-figure proj-video-figure">
+    <div class="proj-video-wrap">
+      <video controls preload="metadata"
+             poster="images/project1-video-a-thumb.jpg"
+             aria-label="Left video: describe what is shown">
+        <source src="videos/project1-clip-a.webm" type="video/webm">
+        <source src="videos/project1-clip-a.mp4"  type="video/mp4">
+        <source src="videos/project1-clip-a.mov"  type="video/quicktime">
+        <p><a href="videos/project1-clip-a.mp4" download>Download video</a></p>
+      </video>
+    </div>
+    <figcaption>
+      <span class="vid-label">▶ Video</span>
+      Left caption — e.g. "Version 1 prototype under load test."
+    </figcaption>
+  </figure>
+
+  <figure class="proj-figure proj-video-figure">
+    <div class="proj-video-wrap">
+      <video controls preload="metadata"
+             poster="images/project1-video-b-thumb.jpg"
+             aria-label="Right video: describe what is shown">
+        <source src="videos/project1-clip-b.webm" type="video/webm">
+        <source src="videos/project1-clip-b.mp4"  type="video/mp4">
+        <source src="videos/project1-clip-b.mov"  type="video/quicktime">
+        <p><a href="videos/project1-clip-b.mp4" download>Download video</a></p>
+      </video>
+    </div>
+    <figcaption>
+      <span class="vid-label">▶ Video</span>
+      Right caption — e.g. "Version 2 after redesign: 40% less vibration."
+    </figcaption>
+  </figure>
+
+</div>
+<!-- END VARIANT 2 -->
+
+
+
+
+<!-- ════════════════════════════════════════════════════════════════
+     VARIANT 3 — AUTOPLAY LOOP (no controls, silent atmosphere clip)
+     Use for: ambient b-roll, slow machine motion, rotating 3D render,
+              looping assembly animation — something that plays quietly
+              in the background while the reader reads text nearby.
+     Place: inside a <section class="proj-section"> alongside a <p>,
+            or between sections as a visual break.
+     NOTE: autoplay only works when muted. This is a browser rule,
+           not something you can override.
+     ════════════════════════════════════════════════════════════════ -->
+
+<figure class="proj-figure proj-video-figure proj-video-loop">
+
+  <div class="proj-video-wrap">
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      aria-label="Looping ambient clip: describe what is shown"
+    >
+      <source src="videos/project1-loop.webm" type="video/webm">
+      <source src="videos/project1-loop.mp4"  type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Caption is optional on a loop — remove figcaption entirely if you prefer -->
+  <figcaption>
+    <span class="vid-label">● Loop</span>
+    Caption: e.g. "Continuous rotation test — 72 hours at rated load."
+  </figcaption>
+
+</figure>
+<!-- END VARIANT 3 -->

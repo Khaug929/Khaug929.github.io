@@ -130,6 +130,42 @@
             <figcaption>Caption: What is shown in this image, and why is it relevant.</figcaption>
           </figure>
 
+          <figure class="proj-figure proj-video-figure">
+
+          <div class="proj-video-wrap">
+            <!--
+              src ORDER MATTERS — browser uses the first format it can play.
+              Put .webm first (best quality/size), .mp4 second (widest support).
+              Delete any <source> line whose file you don't have.
+
+              EDIT: replace the filenames with your actual video files.
+              All files go in the /videos/ folder.
+            -->
+            <video
+              controls
+              preload="metadata"
+              poster="images/vulkan-thumbnail-1.jpg"
+              aria-label="36 hot fire tests of the Vulkan tap off torch ignition system"
+            >
+              <source src="videos/vulkan-1.mp4"  type="video/mp4">
+              <!-- .mov fallback — Safari only; omit if you have an .mp4 -->
+              <source src="videos/vulkan_1.mov"  type="video/quicktime">
+              <!-- Shown if the browser can't play any format -->
+              <p>
+                Your browser can't play this video.
+                <a href="videos/vulkan-1.mp4" download>Download it instead.</a>
+              </p>
+            </video>
+          </div>
+
+  <!-- EDIT: describe what the video shows -->
+  <figcaption>
+    <span class="vid-label">▶ Video</span>
+    Caption: What this demo shows — test conditions, speed, key result visible in the clip.
+  </figcaption>
+
+</figure>
+
           <!-- Problem / Background -->
           <section class="proj-section">
             <h2 class="proj-h2">Problem &amp; Background</h2>

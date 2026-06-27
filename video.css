@@ -1,0 +1,76 @@
+/* ═══════════════════════════════════════════════════════════
+   VIDEO STYLES — add this block to the bottom of project.css
+   Works with all three variants in video-blocks.html
+═══════════════════════════════════════════════════════════ */
+
+/* ── Video figure wrapper (inherits proj-figure border/radius) ──
+   proj-video-figure overrides the fixed max-height that images use
+   so the video keeps its natural aspect ratio instead of cropping. */
+.proj-video-figure {
+  /* Remove the max-height that proj-figure sets on img tags */
+  overflow: visible; /* let the inner wrap handle clipping */
+  padding: 0;
+}
+.proj-video-figure .proj-video-wrap {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+  background: #000;  /* letterbox bars match black, not charcoal */
+  line-height: 0;    /* kills ghost whitespace below video element */
+}
+
+/* The <video> element itself — responsive, never overflows */
+.proj-video-figure video {
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  display: block;
+  /* Keep native aspect ratio; don't stretch */
+  object-fit: contain;
+}
+
+/* ── Loop variant — no controls chrome, so taller cap is fine ── */
+.proj-video-loop video {
+  max-height: 480px;
+  object-fit: cover; /* loops look better cropped to fill */
+  cursor: default;
+}
+
+/* ── Side-by-side grid for video pairs ──
+   proj-video-grid lives inside .proj-image-grid — no extra rules
+   needed for desktop. This just adjusts mobile breakpoint so each
+   video gets its own row (16:9 videos are too small at half-width). */
+@media (max-width: 700px) {
+  .proj-video-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Video label in caption (▶ Video / ● Loop) ── */
+.vid-label {
+  font-family: var(--font-disp);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: .5rem;
+}
+
+/* ── Custom video controls skin (optional) ──
+   Browsers render their own controls by default — that's fine.
+   If you want the controls to match your orange theme, uncomment
+   the block below. It works in Chrome/Edge via pseudo-elements.
+   Firefox and Safari use their own native controls regardless. */
+
+/*
+video::-webkit-media-controls-panel {
+  background: var(--bg-card-2);
+}
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-mute-button {
+  filter: invert(60%) sepia(80%) saturate(400%) hue-rotate(340deg);
+}
+video::-webkit-media-controls-timeline {
+  accent-color: var(--accent);
+}
+*/
