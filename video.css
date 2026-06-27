@@ -20,9 +20,9 @@
 
 /* The <video> element itself — responsive, never overflows */
 .proj-video-figure video {
-  width: 100%;
+  width: 1250px;
   height: auto;
-  max-height: 480;
+  max-height: 720px;
   display: block;
   /* Keep native aspect ratio; don't stretch */
   object-fit: contain;
