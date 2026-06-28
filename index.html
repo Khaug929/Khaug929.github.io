@@ -30,22 +30,21 @@
              3. Add the matching category label to your project cards in projects.html
              See CATEGORY-GUIDE.md for the full step-by-step. -->
         <li class="dropdown">
-          <a href="projects.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          <a href="projects/index.html" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false">
             Projects <span class="chevron" aria-hidden="true">▾</span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li role="none"><a href="projects.html"              role="menuitem" class="drop-link">All Projects</a></li>
+            <li role="none"><a href="projects/index.html"              role="menuitem" class="drop-link">All Projects</a></li>
             <li role="none" class="drop-divider" aria-hidden="true"></li>
             <li role="none"><a href="projects.html?cat=mechanical"  role="menuitem" class="drop-link">Mechanical</a></li>
             <li role="none"><a href="projects.html?cat=electrical"  role="menuitem" class="drop-link">Electrical</a></li>
             <li role="none"><a href="projects.html?cat=software"    role="menuitem" class="drop-link">Software</a></li>
-            <li role="none"><a href="projects.html?cat=systems"     role="menuitem" class="drop-link">Systems</a></li>
             <!-- ADD NEW CATEGORIES HERE — copy the line above and change the cat= value and label -->
           </ul>
         </li>
 
         <li><a href="updates.html"  class="nav-link">Updates</a></li>
-        <li><a href="about.html"    class="nav-link">About</a></li>
+        <li><a href="about/index.html"    class="nav-link">About</a></li>
         <li><a href="contact/index.html"  class="nav-link">Contact</a></li>
       </ul>
 
@@ -65,7 +64,7 @@
       <div class="mobile-dropdown">
         <button class="nav-link mobile-cat-toggle" onclick="toggleMobileCat()">Projects ▾</button>
         <div class="mobile-cat-menu" id="mobile-cat-menu">
-          <a href="projects.html"             class="drop-link">All Projects</a>
+          <a href="projects/index.html"             class="drop-link">All Projects</a>
           <a href="projects.html?cat=mechanical"  class="drop-link">Mechanical</a>
           <a href="projects.html?cat=electrical"  class="drop-link">Electrical</a>
           <a href="projects.html?cat=software"    class="drop-link">Software</a>
@@ -74,80 +73,76 @@
         </div>
       </div>
       <a href="updates.html"  class="nav-link">Updates</a>
-      <a href="about.html"    class="nav-link">About</a>
+      <a href="about/index.html"    class="nav-link">About</a>
       <a href="contact/index.html"  class="nav-link">Contact</a>
       <a href="docs/Kristian_Haugen_Resume.pdf" class="btn btn-outline-sm" download style="width:fit-content">Resume ↓</a>
     </div>
   </nav>
 
-    <!-- ═══════════════════════════════════════
-       SLIDESHOW
+  <!-- ═══════════════════════════════════════
+       CAROUSEL BANNER
        HOW TO ADD IMAGES:
-       1. Drop any jpg/png/webp into the images/slideshow/ folder
-       2. Add a new <li> inside .ss-track for each image, copying
-          the pattern below — just change the src filename.
-       3. Order in the HTML = order in the rotation.
-       No captions, no links — pure visual.
+         1. Drop files into images/slideshow/
+         2. Copy any <li> below and change the src.
+            Order = left-to-right display order.
+       HOW TO CHANGE HEIGHT:
+         Open slideshow.css and change --ss-height.
+       JS clones slides for seamless looping —
+       no extra HTML needed on your part.
   ════════════════════════════════════════ -->
-  <section class="slideshow" id="slideshow" aria-label="Photo slideshow">
+  <section class="slideshow" id="slideshow" aria-label="Photo carousel">
  
-    <!-- ── Track: one <li> per image ── -->
-    <ul class="ss-track" id="ss-track" role="list">
+    <!-- Viewport window — overflow:hidden clips the sides -->
+    <div class="ss-viewport" id="ss-viewport">
  
-      <!-- SLIDE 1 — EDIT src to your filename -->
-      <li class="ss-slide" role="listitem" aria-hidden="false">
-        <div class="ss-bg-blur" aria-hidden="true"></div>
-        <img class="ss-img" src="images/slideshow/slide1.jpg" alt="" draggable="false">
-      </li>
+      <!-- Track scrolls horizontally via translateX -->
+      <ul class="ss-track" id="ss-track" aria-live="off">
  
-      <!-- SLIDE 2 -->
-      <li class="ss-slide" role="listitem" aria-hidden="true">
-        <div class="ss-bg-blur" aria-hidden="true"></div>
-        <img class="ss-img" src="images/slideshow/slide2.jpg" alt="" draggable="false">
-      </li>
+        <!-- SLIDE 1 — change src to your filename -->
+        <li class="ss-slide"><img class="ss-img" src="images/slideshow/slide1.jpg" alt="" draggable="false"></li>
  
-      <!-- SLIDE 3 -->
-      <li class="ss-slide" role="listitem" aria-hidden="true">
-        <div class="ss-bg-blur" aria-hidden="true"></div>
-        <img class="ss-img" src="images/slideshow/slide3.jpg" alt="" draggable="false">
-      </li>
+        <!-- SLIDE 2 -->
+        <li class="ss-slide"><img class="ss-img" src="images/slideshow/slide2.jpg" alt="" draggable="false"></li>
  
-      <!-- SLIDE 4 -->
-      <li class="ss-slide" role="listitem" aria-hidden="true">
-        <div class="ss-bg-blur" aria-hidden="true"></div>
-        <img class="ss-img" src="images/slideshow/slide4.jpg" alt="" draggable="false">
-      </li>
+        <!-- SLIDE 3 -->
+        <li class="ss-slide"><img class="ss-img" src="images/slideshow/slide3.jpg" alt="" draggable="false"></li>
  
-      <!-- SLIDE 5 -->
-      <li class="ss-slide" role="listitem" aria-hidden="true">
-        <div class="ss-bg-blur" aria-hidden="true"></div>
-        <img class="ss-img" src="images/slideshow/slide5.jpg" alt="" draggable="false">
-      </li>
+        <!-- SLIDE 4 -->
+        <li class="ss-slide"><img class="ss-img" src="images/slideshow/slide4.jpg" alt="" draggable="false"></li>
  
-      <!-- ADD MORE SLIDES: copy any <li> block above and change the src -->
+        <!-- SLIDE 5 -->
+        <li class="ss-slide"><img class="ss-img" src="images/slideshow/slide5.jpg" alt="" draggable="false"></li>
  
-    </ul>
+        <!-- ADD MORE: copy any <li> above and change the src -->
  
-    <!-- ── Left arrow ── -->
+      </ul>
+    </div>
+ 
+    <!-- Left edge fade -->
+    <div class="ss-fade ss-fade-left"  aria-hidden="true"></div>
+    <!-- Right edge fade -->
+    <div class="ss-fade ss-fade-right" aria-hidden="true"></div>
+ 
+    <!-- Left arrow -->
     <button class="ss-arrow ss-arrow-prev" id="ss-prev" aria-label="Previous image">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
     </button>
  
-    <!-- ── Right arrow ── -->
+    <!-- Right arrow -->
     <button class="ss-arrow ss-arrow-next" id="ss-next" aria-label="Next image">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="9 18 15 12 9 6"/>
       </svg>
     </button>
  
-    <!-- ── Fullscreen button ── -->
-    <button class="ss-fullscreen-btn" id="ss-fullscreen-btn" aria-label="Open fullscreen">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <!-- Fullscreen button -->
+    <button class="ss-fullscreen-btn" id="ss-fullscreen-btn" aria-label="Open fullscreen viewer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="15 3 21 3 21 9"/>
         <polyline points="9 21 3 21 3 15"/>
         <line x1="21" y1="3" x2="14" y2="10"/>
@@ -155,11 +150,11 @@
       </svg>
     </button>
  
-    <!-- ── Dot indicators ── -->
-    <div class="ss-dots" id="ss-dots" role="tablist" aria-label="Slideshow navigation"></div>
+    <!-- Dot indicators -->
+    <div class="ss-dots" id="ss-dots" role="tablist" aria-label="Carousel navigation"></div>
  
-    <!-- ── Progress bar (auto-advance timer) ── -->
-    <div class="ss-progress" id="ss-progress" aria-hidden="true">
+    <!-- Progress bar -->
+    <div class="ss-progress" aria-hidden="true">
       <div class="ss-progress-bar" id="ss-progress-bar"></div>
     </div>
  
@@ -167,8 +162,8 @@
  
   <!-- ═══════════════════════════════════════
        FULLSCREEN LIGHTBOX
-       Opened by the ⤢ button or double-clicking a slide.
-       Closed by Escape, clicking outside the image, or the × button.
+       Opens when the ⤢ button is clicked.
+       Close with Escape, × button, or click outside.
   ════════════════════════════════════════ -->
   <div class="ss-lightbox" id="ss-lightbox" role="dialog"
        aria-modal="true" aria-label="Fullscreen image viewer" hidden>
@@ -277,7 +272,7 @@
             GitHub
           </a>
 
-          <a href="projects.html" class="btn btn-ghost">View Projects →</a>
+          <a href="projects/index.html" class="btn btn-ghost">View Projects →</a>
         </div>
       </div>
     </div>
@@ -328,7 +323,7 @@
           <p class="section-eyebrow">Work</p>
           <h2 class="section-title">Featured Projects</h2>
         </div>
-        <a href="projects.html" class="see-all-link">See all →</a>
+        <a href="projects/index.html" class="see-all-link">See all →</a>
       </div>
 
       <div class="projects-grid">

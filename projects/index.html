@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Your Name</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <!--
+    PATH NOTE: This file lives at projects/index.html.
+    All root-level assets need ../ to go up one directory.
+    Images inside projects/ use relative paths with no prefix.
+  -->
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="projects.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+       Paths: ../ prefix for all root-level pages
+  ════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-logo">YN<span class="logo-dot">.</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="../index.html"   class="nav-link">Home</a></li>
+        <li class="dropdown">
+          <a href="../projects/" class="nav-link dropdown-toggle active" aria-haspopup="true" aria-expanded="false">
+            Projects <span class="chevron" aria-hidden="true">▾</span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li role="none"><a href="../projects/"                        role="menuitem" class="drop-link">All Projects</a></li>
+            <li role="none" class="drop-divider" aria-hidden="true"></li>
+            <!--
+              HOW TO ADD A CATEGORY TO THE DROPDOWN:
+              Copy one of the lines below, change the data-cat value and label.
+              Use the exact same string you put in data-category on your project cards.
+              Then add the matching subfolder under projects/ and your HTML files inside it.
+            -->
+            <li role="none"><a href="../projects/?cat=mechanical"  role="menuitem" class="drop-link">Mechanical</a></li>
+            <li role="none"><a href="../projects/?cat=electrical"  role="menuitem" class="drop-link">Electrical</a></li>
+            <li role="none"><a href="../projects/?cat=software"    role="menuitem" class="drop-link">Software</a></li>
+            <li role="none"><a href="../projects/?cat=systems"     role="menuitem" class="drop-link">Systems</a></li>
+            <li role="none"><a href="../projects/?cat=propulsion"  role="menuitem" class="drop-link">Propulsion</a></li>
+            <!-- ADD NEW CATEGORIES HERE -->
+          </ul>
+        </li>
+        <li><a href="../updates/"  class="nav-link">Updates</a></li>
+        <li><a href="../about/"    class="nav-link">About</a></li>
+        <li><a href="../contact/"  class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="../resume.pdf" class="btn btn-outline-sm" download>Resume ↓</a>
+        <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile">
+      <a href="../index.html" class="nav-link">Home</a>
+      <div class="mobile-dropdown">
+        <button class="nav-link mobile-cat-toggle" onclick="toggleMobileCat()">Projects ▾</button>
+        <div class="mobile-cat-menu" id="mobile-cat-menu">
+          <a href="../projects/"                       class="drop-link">All Projects</a>
+          <a href="../projects/?cat=mechanical"  class="drop-link">Mechanical</a>
+          <a href="../projects/?cat=electrical"  class="drop-link">Electrical</a>
+          <a href="../projects/?cat=software"    class="drop-link">Software</a>
+          <a href="../projects/?cat=systems"     class="drop-link">Systems</a>
+          <a href="../projects/?cat=propulsion"  class="drop-link">Propulsion</a>
+        </div>
+      </div>
+      <a href="../updates/"  class="nav-link">Updates</a>
+      <a href="../about/"    class="nav-link">About</a>
+      <a href="../contact/"  class="nav-link">Contact</a>
+      <a href="../resume.pdf" class="btn btn-outline-sm" download style="width:fit-content">Resume ↓</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       PAGE HEADER
+  ════════════════════════════════════════ -->
+  <div class="pb-header">
+    <div class="container">
+      <p class="section-eyebrow">Work</p>
+      <h1 class="pb-title">Projects</h1>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       BOARD TOOLBAR
+       Search + category filter chips + result count
+  ════════════════════════════════════════ -->
+  <div class="pb-toolbar" id="pb-toolbar">
+    <div class="container">
+      <div class="pb-toolbar-inner">
+
+        <!-- Search -->
+        <div class="pb-search-wrap" role="search">
+          <svg class="pb-search-icon" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="search"
+            id="pb-search"
+            class="pb-search-input"
+            placeholder="Search projects…"
+            aria-label="Search projects by title, description, or tags"
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <button class="pb-search-clear" id="pb-search-clear"
+                  aria-label="Clear search" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Category filter chips -->
+        <!--
+          HOW TO ADD A CATEGORY CHIP:
+          Copy one <button> below, set data-cat to your category slug
+          (must match the data-category on your project cards exactly),
+          and update the label text.
+        -->
+        <div class="pb-filters" id="pb-filters" role="group" aria-label="Filter by category">
+          <button class="pb-chip pb-chip-active" data-cat="all">All</button>
+          <button class="pb-chip" data-cat="mechanical">Mechanical</button>
+          <button class="pb-chip" data-cat="electrical">Electrical</button>
+          <button class="pb-chip" data-cat="software">Software</button>
+          <button class="pb-chip" data-cat="systems">Systems</button>
+          <button class="pb-chip" data-cat="propulsion">Propulsion</button>
+          <!-- ADD NEW CATEGORY CHIPS HERE -->
+        </div>
+
+        <!-- Live result count -->
+        <p class="pb-count" id="pb-count" aria-live="polite" aria-atomic="true"></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       BOARD
+       JS reads data-* attributes on each article
+       to sort, filter, and search. Categories are
+       grouped automatically — no manual sections.
+  ════════════════════════════════════════ -->
+  <main class="pb-main" id="pb-main">
+    <div class="container">
+
+      <!--
+        ════════════════════════════════════════════
+        HOW TO ADD A PROJECT CARD
+        ════════════════════════════════════════════
+
+        1. Copy any <article> block below.
+        2. Set these data-* attributes on the <article>:
+             data-category  — slug matching your chip (e.g. "propulsion")
+             data-date      — YYYY or YYYY-MM for sorting (e.g. "2024-03")
+             data-title     — project title (used for A→Z tiebreak)
+             data-summary   — full searchable text: title + description +
+                              tags all in one string (search scrubs this)
+
+        3. Set href on the card link to the subfolder path:
+             propulsion/vulkan.html
+             mechanical/robotic-arm.html
+             etc.
+
+        4. Image path is relative to projects/index.html, so:
+             images/propulsion/vulkan-thumb.jpg
+             (put images inside projects/images/ subfolders by category)
+
+        STATUS CLASSES:
+          status-complete   orange pill  "Completed"
+          status-progress   yellow pill  "In Progress"
+          status-concept    gray pill    "Concept"
+        ════════════════════════════════════════════
+      -->
+
+      <!-- ─────────────────────────────────────────
+           PROPULSION
+      ──────────────────────────────────────────── -->
+      <article class="project-card"
+               data-category="propulsion"
+               data-date="2024-09"
+               data-title="Vulkan Engine"
+               data-summary="Vulkan Engine propulsion liquid rocket engine thrust chamber combustion ignition test stand hot fire nozzle injector 2024">
+        <a href="propulsion/vulkan.html" class="card-image-link">
+          <div class="card-image">
+            <img src="images/propulsion/vulkan-thumb.jpg"
+                 alt="Vulkan engine on test stand"
+                 onerror="this.parentElement.classList.add('img-placeholder')">
+            <span class="card-cat">Propulsion</span>
+          </div>
+        </a>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-date">2024</span>
+            <span class="card-status status-progress">In Progress</span>
+          </div>
+          <h2 class="card-title"><a href="propulsion/vulkan.html">Vulkan Engine</a></h2>
+          <p class="card-desc">
+            <!-- EDIT: 1–2 sentence project summary. This text is scraped by search. -->
+            Development of a liquid bipropellant rocket engine including thrust chamber design,
+            injector analysis, and hot-fire test stand integration.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Combustion</span>
+            <span class="tag">CFD</span>
+            <span class="tag">Test Stand</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────────────────────────────────────
+           MECHANICAL
+      ──────────────────────────────────────────── -->
+      <article class="project-card"
+               data-category="mechanical"
+               data-date="2024-06"
+               data-title="Robotic Arm"
+               data-summary="Robotic arm mechanical design 6-DOF manipulation servo actuation FEA structural analysis fabrication CNC 2024">
+        <a href="mechanical/robotic-arm.html" class="card-image-link">
+          <div class="card-image">
+            <img src="images/mechanical/robotic-arm-thumb.jpg"
+                 alt="Robotic arm assembly"
+                 onerror="this.parentElement.classList.add('img-placeholder')">
+            <span class="card-cat">Mechanical</span>
+          </div>
+        </a>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-date">2024</span>
+            <span class="card-status status-complete">Completed</span>
+          </div>
+          <h2 class="card-title"><a href="mechanical/robotic-arm.html">Robotic Arm</a></h2>
+          <p class="card-desc">
+            Six-degree-of-freedom manipulator arm designed for precision assembly tasks,
+            with FEA-validated structure and custom servo drive system.
+          </p>
+          <div class="card-tags">
+            <span class="tag">CAD</span>
+            <span class="tag">FEA</span>
+            <span class="tag">Actuation</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────────────────────────────────────
+           ELECTRICAL
+      ──────────────────────────────────────────── -->
+      <article class="project-card"
+               data-category="electrical"
+               data-date="2024-03"
+               data-title="Flight Computer PCB"
+               data-summary="Flight computer PCB avionics embedded microcontroller IMU GPS data acquisition power management 2024">
+        <a href="electrical/flight-computer.html" class="card-image-link">
+          <div class="card-image">
+            <img src="images/electrical/flight-computer-thumb.jpg"
+                 alt="Flight computer PCB"
+                 onerror="this.parentElement.classList.add('img-placeholder')">
+            <span class="card-cat">Electrical</span>
+          </div>
+        </a>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-date">2024</span>
+            <span class="card-status status-complete">Completed</span>
+          </div>
+          <h2 class="card-title"><a href="electrical/flight-computer.html">Flight Computer PCB</a></h2>
+          <p class="card-desc">
+            Custom avionics board integrating IMU, GPS, and data logging for rocketry
+            applications, with redundant power management and real-time telemetry.
+          </p>
+          <div class="card-tags">
+            <span class="tag">PCB</span>
+            <span class="tag">Embedded</span>
+            <span class="tag">Avionics</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────────────────────────────────────
+           SOFTWARE
+      ──────────────────────────────────────────── -->
+      <article class="project-card"
+               data-category="software"
+               data-date="2023-11"
+               data-title="Trajectory Simulator"
+               data-summary="Trajectory simulator Python 6DOF flight simulation drag aerodynamics numerical integration rocketry ballistic 2023">
+        <a href="software/trajectory-sim.html" class="card-image-link">
+          <div class="card-image">
+            <img src="images/software/trajectory-sim-thumb.jpg"
+                 alt="Trajectory simulation output"
+                 onerror="this.parentElement.classList.add('img-placeholder')">
+            <span class="card-cat">Software</span>
+          </div>
+        </a>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-date">2023</span>
+            <span class="card-status status-complete">Completed</span>
+          </div>
+          <h2 class="card-title"><a href="software/trajectory-sim.html">Trajectory Simulator</a></h2>
+          <p class="card-desc">
+            Six-degree-of-freedom flight simulator for sounding rockets, implementing
+            real-time drag and thrust integration with atmospheric density modelling.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">6DOF</span>
+            <span class="tag">Simulation</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ─────────────────────────────────────────
+           SYSTEMS
+      ──────────────────────────────────────────── -->
+      <article class="project-card"
+               data-category="systems"
+               data-date="2023-08"
+               data-title="Launch Rail System"
+               data-summary="Launch rail system integration ground support equipment launch pad alignment guide rail rocketry 2023">
+        <a href="systems/launch-rail.html" class="card-image-link">
+          <div class="card-image">
+            <img src="images/systems/launch-rail-thumb.jpg"
+                 alt="Launch rail on pad"
+                 onerror="this.parentElement.classList.add('img-placeholder')">
+            <span class="card-cat">Systems</span>
+          </div>
+        </a>
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-date">2023</span>
+            <span class="card-status status-complete">Completed</span>
+          </div>
+          <h2 class="card-title"><a href="systems/launch-rail.html">Launch Rail System</a></h2>
+          <p class="card-desc">
+            Modular ground support equipment providing alignment, elevation adjustment,
+            and launch rail guidance for mid-power rocketry vehicles.
+          </p>
+          <div class="card-tags">
+            <span class="tag">GSE</span>
+            <span class="tag">Mechanical</span>
+            <span class="tag">Integration</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ADD MORE PROJECT CARDS ABOVE THIS LINE
+           Copy any article block, update all data-* attributes and paths -->
+
+    </div><!-- /container -->
+
+    <!-- Empty state — shown by JS when no results match -->
+    <div class="pb-empty" id="pb-empty" hidden>
+      <div class="pb-empty-inner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <p class="pb-empty-msg">No projects match <span id="pb-empty-term"></span></p>
+        <button class="btn btn-ghost btn-sm" id="pb-empty-reset">Clear filters</button>
+      </div>
+    </div>
+
+  </main><!-- /pb-main -->
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-name">Your Name</span>
+        <div class="footer-links">
+          <a href="#"              class="footer-link" target="_blank" rel="noopener">GitHub</a>
+          <a href="#"              class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="../resume.pdf"  class="footer-link" download>Resume</a>
+          <a href="../contact/"    class="footer-link">Contact</a>
+        </div>
+        <span class="footer-copy">&copy; 2025</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../main.js"></script>
+  <script src="projects.js"></script>
+
+</body>
+</html>

@@ -1,117 +1,144 @@
 /* ═══════════════════════════════════════════════
-   slideshow.css
-   Drop-in styles for the homepage slideshow section.
-   Add to index.html <head>:
-     <link rel="stylesheet" href="slideshow.css">
+   slideshow.css  —  Horizontal carousel banner
+   Linked from index.html <head> after style.css.
 ════════════════════════════════════════════════ */
 
+/* ══════════════════════════════════════════════
+   ★  HEIGHT CONTROL  ★
+   Change --ss-height to resize the banner.
+   Max is capped at 540px per design spec.
+   Options to try:
+     280px  →  slim accent strip
+     360px  →  compact banner
+     440px  →  medium banner
+     540px  →  tall banner (hard maximum)
+   Mobile scales automatically — no extra edits.
+══════════════════════════════════════════════ */
+:root {
+  --ss-height:    440px;   /* ← CHANGE THIS ONE VALUE */
+  --ss-max:       540px;   /* hard ceiling — do not exceed */
+  --ss-slide-w:   72%;     /* each slide's width relative to viewport */
+  --ss-gap:       16px;    /* gap between slides */
+  --ss-speed:     520ms;   /* slide transition duration */
+  --ss-ease:      cubic-bezier(.4, 0, .2, 1);
+}
+
 /* ═══════════════════════════════════════════════
-   SLIDESHOW SECTION
+   OUTER SECTION
 ════════════════════════════════════════════════ */
 .slideshow {
   position: relative;
   width: 100%;
-  /* Height: fixed viewport-relative band. Adjust this one value to
-     make the slideshow taller or shorter. 72vh is a good default. */
-  height: 50vh;
-  min-height: 340px;
-  max-height: 860px;
+  height: var(--ss-height);
+  max-height: var(--ss-max);
   background: #0e0c0a;
-  overflow: hidden;
-  /* Sits directly below the fixed navbar */
+  overflow: hidden;           /* clips slides that are off-screen */
   margin-top: var(--nav-h);
-  /* Subtle bottom border to separate from hero */
   border-bottom: 2px solid var(--accent);
-  /* Pause cursor hint */
-  cursor: default;
-  /* Touch targets don't interfere with scroll */
-  touch-action: pan-y;
-}
-
-/* ── Track ── */
-.ss-track {
-  list-style: none;
-  margin: 0; padding: 0;
-  position: relative;
-  width: 100%;
-  height: 100%;
+  touch-action: pan-y;        /* allow vertical page scroll, intercept horizontal */
+  user-select: none;
 }
 
 /* ═══════════════════════════════════════════════
-   INDIVIDUAL SLIDE
-   Each slide is absolutely stacked on top of each
-   other. JS toggles .ss-active / .ss-exit classes.
+   VIEWPORT + TRACK
+   .ss-viewport is the visible window (full width).
+   .ss-track is the wide flex row that slides left/right.
+════════════════════════════════════════════════ */
+.ss-viewport {
+  width: 100%;
+  height: 100%;
+  overflow: visible;          /* clipping handled by .slideshow */
+  position: relative;
+}
+
+.ss-track {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  /* Gap between slides */
+  gap: var(--ss-gap);
+  /* Horizontal position driven by JS via translateX */
+  transform: translateX(0);
+  will-change: transform;
+  /* Transition applied by JS when animating; removed for instant jump */
+  transition: transform var(--ss-speed) var(--ss-ease);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   INDIVIDUAL SLIDES
+   Each slide is a fixed-width flex child.
+   The track translates left/right to bring
+   different slides into the centred position.
 ════════════════════════════════════════════════ */
 .ss-slide {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 0 0 var(--ss-slide-w);
+  height: 100%;
+  border-radius: 6px;
   overflow: hidden;
-  /* Hidden by default */
-  opacity: 0;
-  pointer-events: none;
-  /* Cross-fade transition */
-  transition: opacity .65s ease;
+  position: relative;
+  /* Dim non-active slides slightly */
+  opacity: 0.45;
+  transform: scale(0.90);
+  transition:
+    opacity   var(--ss-speed) var(--ss-ease),
+    transform var(--ss-speed) var(--ss-ease);
 }
+
+/* Active (centred) slide — full brightness, full scale */
 .ss-slide.ss-active {
   opacity: 1;
-  pointer-events: auto;
-  z-index: 1;
-}
-.ss-slide.ss-exit {
-  opacity: 0;
-  z-index: 0;
-}
-
-/* ── Blurred background fill ──
-   Solves the aspect-ratio mismatch problem:
-   the image's own pixels, scaled up and blurred,
-   fill the letterbox/pillarbox bars so there are
-   never ugly black gaps on wide or tall images.   */
-.ss-bg-blur {
-  position: absolute;
-  inset: -20px; /* slight overscan to hide blur edges */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: blur(28px) brightness(.45) saturate(1.1);
-  transform: scale(1.05); /* stop blur from revealing edges */
-  z-index: 0;
-  /* bg-image set by JS to match the slide's <img> src */
-}
-
-/* ── Main image ──
-   Uses object-fit:contain so the full image is always
-   visible regardless of its aspect ratio.           */
-.ss-img {
-  position: relative;
-  z-index: 1;
-  display: block;
-  /* Never overflow the slide */
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  /* Prevent stretching */
-  object-fit: contain;
-  /* Smooth image rendering */
-  image-rendering: auto;
-  /* Block-level so no baseline gap */
-  vertical-align: middle;
-  /* Crisp edges on upscale */
-  -webkit-font-smoothing: antialiased;
-  /* Very subtle shadow to lift image off blurred bg */
-  filter: drop-shadow(0 4px 32px rgba(0,0,0,.55));
-  /* Scale-in on become active */
-  transition: transform .65s ease, filter .65s ease;
   transform: scale(1);
-  user-select: none;
 }
-/* Zoom VERY slightly when slide is active (adds life) */
-.ss-slide.ss-active .ss-img {
-  transform: scale(1.012);
+
+/* ── Image inside each slide ── */
+.ss-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  pointer-events: none;
+  /* To bias the crop point on a specific slide,
+     add inline style to its <img> tag:
+     style="object-position: center 30%"  → show top portion
+     style="object-position: center 70%"  → show bottom portion */
+}
+
+/* ═══════════════════════════════════════════════
+   EDGE FADE OVERLAYS
+   Gradient masks that fade the cut-off sides
+   into the background colour, making the
+   cropping look intentional rather than abrupt.
+════════════════════════════════════════════════ */
+.ss-fade {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 20%;            /* width of the fade zone — increase to widen */
+  min-width: 40px;
+  z-index: 5;
+  pointer-events: none;
+}
+.ss-fade-left {
+  left: 0;
+  background: linear-gradient(to right,
+    #0e0c0a 0%,
+    rgba(14,12,10,.7) 40%,
+    transparent 100%
+  );
+}
+.ss-fade-right {
+  right: 0;
+  background: linear-gradient(to left,
+    #0e0c0a 0%,
+    rgba(14,12,10,.7) 40%,
+    transparent 100%
+  );
 }
 
 /* ═══════════════════════════════════════════════
@@ -122,64 +149,63 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 48px; height: 48px;
+  width: 44px; height: 44px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,.18);
-  background: rgba(28,26,24,.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,.2);
+  background: rgba(20,18,16,.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: background var(--trans), border-color var(--trans),
-              transform .18s ease, opacity var(--trans);
-  opacity: .7;
+  opacity: .75;
+  transition:
+    background  var(--trans),
+    border-color var(--trans),
+    opacity     var(--trans),
+    transform   .15s ease;
 }
-.ss-arrow svg { width: 22px; height: 22px; flex-shrink: 0; }
+.ss-arrow svg { width: 20px; height: 20px; flex-shrink: 0; }
 .ss-arrow:hover {
   background: var(--accent);
   border-color: var(--accent);
   opacity: 1;
-  transform: translateY(-50%) scale(1.08);
+  transform: translateY(-50%) scale(1.1);
 }
-.ss-arrow:active { transform: translateY(-50%) scale(.96); }
+.ss-arrow:active { transform: translateY(-50%) scale(.94); }
 .ss-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ss-arrow-prev { left: 1rem; }
+.ss-arrow-next { right: 1rem; }
 
-.ss-arrow-prev { left: 1.25rem; }
-.ss-arrow-next { right: 1.25rem; }
-
-/* Hide arrows on very small screens — swipe works instead */
-@media (max-width: 400px) {
-  .ss-arrow { display: none; }
-}
+@media (max-width: 400px) { .ss-arrow { display: none; } }
 
 /* ═══════════════════════════════════════════════
-   FULLSCREEN BUTTON (top-right corner)
+   FULLSCREEN BUTTON
 ════════════════════════════════════════════════ */
 .ss-fullscreen-btn {
   position: absolute;
-  top: 1rem; right: 1rem;
+  top: .85rem; right: .85rem;
   z-index: 10;
-  width: 38px; height: 38px;
+  width: 36px; height: 36px;
   border-radius: var(--radius);
   border: 1.5px solid rgba(255,255,255,.18);
-  background: rgba(28,26,24,.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(20,18,16,.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  opacity: .55;
+  opacity: .5;
   transition: background var(--trans), border-color var(--trans),
-              opacity var(--trans), transform .18s ease;
+              opacity var(--trans), transform .15s ease;
 }
-.ss-fullscreen-btn svg { width: 16px; height: 16px; }
+.ss-fullscreen-btn svg { width: 15px; height: 15px; }
 .ss-fullscreen-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
@@ -189,47 +215,44 @@
 .ss-fullscreen-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* ═══════════════════════════════════════════════
-   DOT INDICATORS (bottom centre)
+   DOT INDICATORS
 ════════════════════════════════════════════════ */
 .ss-dots {
   position: absolute;
-  bottom: 1.25rem;
+  bottom: .9rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
   display: flex;
-  gap: .45rem;
+  gap: .4rem;
   align-items: center;
 }
-/* Individual dots are injected by JS */
 .ss-dot {
-  width: 7px; height: 7px;
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: rgba(255,255,255,.3);
+  background: rgba(255,255,255,.28);
   border: none;
   cursor: pointer;
   padding: 0;
-  transition: background var(--trans), transform var(--trans), width var(--trans);
+  transition: background var(--trans), width var(--trans);
   flex-shrink: 0;
 }
 .ss-dot.ss-dot-active {
   background: var(--accent);
-  width: 20px;          /* active dot stretches into a pill */
-  border-radius: 4px;
+  width: 18px;
+  border-radius: 3px;
 }
-.ss-dot:hover:not(.ss-dot-active) { background: rgba(255,255,255,.6); }
+.ss-dot:hover:not(.ss-dot-active) { background: rgba(255,255,255,.55); }
 .ss-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
 /* ═══════════════════════════════════════════════
-   PROGRESS BAR (auto-advance timer)
-   Thin line along the very bottom of the slideshow.
-   JS restarts the animation on each slide change.
+   PROGRESS BAR
 ════════════════════════════════════════════════ */
 .ss-progress {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 2px;
-  background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.07);
   z-index: 10;
   overflow: hidden;
 }
@@ -237,7 +260,6 @@
   height: 100%;
   width: 0%;
   background: var(--accent);
-  /* Duration is set by JS to match INTERVAL constant */
   transition: width linear;
 }
 
@@ -252,50 +274,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Animate in */
   opacity: 0;
   transition: opacity .25s ease;
 }
-/* JS removes [hidden] and adds .ss-lb-open */
-.ss-lightbox.ss-lb-open {
-  opacity: 1;
-}
-/* While hidden attribute is set, don't take up space */
-.ss-lightbox[hidden] { display: none; }
+.ss-lightbox.ss-lb-open { opacity: 1; }
+.ss-lightbox[hidden]     { display: none; }
 
-/* Image wrapper — constrains image inside viewport */
 .ss-lb-img-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: 4rem 6rem; /* room for arrows */
+  width: 100%; height: 100%;
+  padding: 4rem 6rem;
   box-sizing: border-box;
 }
 .ss-lb-img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
+  max-width: 100%; max-height: 100%;
+  width: auto; height: auto;
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 8px 64px rgba(0,0,0,.7);
-  /* Smooth slide transition in lightbox */
-  transition: opacity .2s ease, transform .2s ease;
+  transition: opacity .18s ease, transform .18s ease;
   user-select: none;
 }
-.ss-lb-img.ss-lb-fade {
-  opacity: 0;
-  transform: scale(.97);
-}
+.ss-lb-img.ss-lb-fade { opacity: 0; transform: scale(.97); }
 
-/* Close button */
 .ss-lb-close {
   position: fixed;
-  top: 1.25rem; right: 1.25rem;
+  top: 1.1rem; right: 1.1rem;
   z-index: 10;
-  width: 44px; height: 44px;
+  width: 42px; height: 42px;
   border-radius: 50%;
   border: 1.5px solid rgba(255,255,255,.2);
   background: rgba(28,26,24,.7);
@@ -305,19 +313,17 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: background var(--trans), border-color var(--trans), transform .18s ease;
+  transition: background var(--trans), border-color var(--trans), transform .15s ease;
 }
-.ss-lb-close svg { width: 20px; height: 20px; }
+.ss-lb-close svg { width: 19px; height: 19px; }
 .ss-lb-close:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
 .ss-lb-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-/* Lightbox arrows */
 .ss-lb-arrow {
   position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 50%; transform: translateY(-50%);
   z-index: 10;
-  width: 52px; height: 52px;
+  width: 50px; height: 50px;
   border-radius: 50%;
   border: 1.5px solid rgba(255,255,255,.18);
   background: rgba(28,26,24,.6);
@@ -327,27 +333,25 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: background var(--trans), border-color var(--trans),
-              transform .18s ease, opacity var(--trans);
   opacity: .7;
+  transition: background var(--trans), border-color var(--trans),
+              opacity var(--trans), transform .15s ease;
 }
-.ss-lb-arrow svg { width: 24px; height: 24px; }
+.ss-lb-arrow svg { width: 22px; height: 22px; }
 .ss-lb-arrow:hover { background: var(--accent); border-color: var(--accent); opacity: 1; }
 .ss-lb-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.ss-lb-prev { left: 1rem; }
-.ss-lb-next { right: 1rem; }
+.ss-lb-prev { left: .85rem; }
+.ss-lb-next { right: .85rem; }
 
-/* Counter — "3 / 5" */
 .ss-lb-counter {
   position: fixed;
-  bottom: 1.25rem;
-  left: 50%;
+  bottom: 1.1rem; left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-disp);
-  font-size: .85rem;
+  font-size: .82rem;
   font-weight: 600;
   letter-spacing: .12em;
-  color: rgba(255,255,255,.4);
+  color: rgba(255,255,255,.38);
   pointer-events: none;
 }
 
@@ -355,25 +359,24 @@
    RESPONSIVE
 ════════════════════════════════════════════════ */
 @media (max-width: 700px) {
-  .slideshow {
-    height: 52vw;
-    min-height: 220px;
-    max-height: 480px;
+  :root {
+    --ss-slide-w: 88%;   /* wider slides on mobile so image fills more screen */
   }
-  .ss-lb-img-wrap { padding: 3.5rem 3.5rem; }
+  .slideshow {
+    height: calc(var(--ss-height) * 0.6);
+    min-height: 160px;
+  }
+  .ss-lb-img-wrap { padding: 3.5rem; }
   .ss-lb-prev { left: .25rem; }
   .ss-lb-next { right: .25rem; }
 }
 
 /* ═══════════════════════════════════════════════
    REDUCED MOTION
-   Respect the system preference: disable all
-   animations but keep the slideshow functional.
 ════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .ss-slide { transition: none; }
-  .ss-img   { transition: none; }
-  .ss-slide.ss-active .ss-img { transform: none; }
-  .ss-lb-img { transition: none; }
+  .ss-track        { transition: none; }
+  .ss-slide        { transition: none; }
+  .ss-lb-img       { transition: none; }
   .ss-progress-bar { transition: none; }
 }

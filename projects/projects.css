@@ -1,0 +1,291 @@
+/* ═══════════════════════════════════════════════
+   projects.css
+   Styles specific to projects/index.html.
+   ../style.css is loaded first so all :root
+   tokens (--accent, --bg-card, --font-disp …)
+   are already available here.
+════════════════════════════════════════════════ */
+
+/* ── Page offset for fixed navbar ── */
+.pb-header { padding-top: var(--nav-h); }
+
+/* ═══════════════════════════════════════════════
+   PAGE HEADER
+════════════════════════════════════════════════ */
+.pb-header {
+  padding-top: calc(var(--nav-h) + 3.5rem);
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.pb-title {
+  font-family: var(--font-disp);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  line-height: .95;
+  margin-top: .4rem;
+}
+
+/* ═══════════════════════════════════════════════
+   TOOLBAR  (search + chips + count)
+   Sticks to the top below the navbar while
+   the user scrolls through the board.
+════════════════════════════════════════════════ */
+.pb-toolbar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 50;
+  background: rgba(28,26,24,.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: .9rem 0;
+}
+
+.pb-toolbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── Search input ── */
+.pb-search-wrap {
+  position: relative;
+  flex: 0 0 260px;
+  display: flex;
+  align-items: center;
+}
+.pb-search-icon {
+  position: absolute;
+  left: .75rem;
+  width: 15px; height: 15px;
+  color: var(--text-dim);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.pb-search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-lit);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: .88rem;
+  padding: .5rem .75rem .5rem 2.2rem;
+  outline: none;
+  transition: border-color var(--trans), box-shadow var(--trans);
+  /* Remove native search clear button */
+  -webkit-appearance: none;
+  appearance: none;
+}
+.pb-search-input::-webkit-search-cancel-button { display: none; }
+.pb-search-input::placeholder { color: var(--text-dim); }
+.pb-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+.pb-search-clear {
+  position: absolute;
+  right: .5rem;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-card-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background var(--trans), color var(--trans);
+}
+.pb-search-clear svg { width: 10px; height: 10px; }
+.pb-search-clear:hover { background: var(--accent); color: #fff; }
+.pb-search-clear[hidden] { display: none; }
+
+/* ── Category chip filters ── */
+.pb-filters {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pb-chip {
+  font-family: var(--font-disp);
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: .35rem .9rem;
+  border-radius: 5px;
+  border: 1.5px solid var(--border-lit);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--trans);
+  line-height: 1;
+}
+.pb-chip:hover { color: var(--text); border-color: var(--accent); }
+.pb-chip.pb-chip-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.pb-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ── Result count ── */
+.pb-count {
+  font-family: var(--font-disp);
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: var(--text-dim);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* ═══════════════════════════════════════════════
+   BOARD MAIN AREA
+════════════════════════════════════════════════ */
+.pb-main {
+  padding: 3rem 0 5rem;
+  min-height: 60vh;
+}
+
+/* ═══════════════════════════════════════════════
+   CATEGORY GROUP HEADERS
+   Injected by JS between category groups.
+   Not shown when a single category is filtered
+   or when a search is active.
+════════════════════════════════════════════════ */
+.pb-group {
+  display: contents; /* invisible wrapper — groups cards without layout impact */
+}
+.pb-group-header {
+  grid-column: 1 / -1;  /* span full grid width */
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0 .5rem;
+  margin-top: 1rem;
+}
+/* First group header needs no extra top space */
+.pb-group:first-child .pb-group-header { margin-top: 0; }
+
+.pb-group-label {
+  font-family: var(--font-disp);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pb-group-count {
+  font-family: var(--font-disp);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--text-dim);
+}
+.pb-group-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ═══════════════════════════════════════════════
+   BOARD GRID
+   JS wraps cards in .pb-board and inserts group
+   headers. This grid applies to .pb-board.
+════════════════════════════════════════════════ */
+.pb-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* ═══════════════════════════════════════════════
+   CARD OVERRIDES
+   project-card classes come from ../style.css.
+   These overrides make every card uniform height
+   on the board (no featured wide-card here).
+════════════════════════════════════════════════ */
+.pb-board .project-card {
+  display: flex;
+  flex-direction: column;
+  /* Remove the featured layout if it carried over */
+  grid-column: unset !important;
+  grid-template-columns: unset !important;
+}
+.pb-board .project-card .card-image {
+  height: 200px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  flex-shrink: 0;
+}
+.pb-board .project-card .card-body {
+  /* Override featured body border/radius to standard card */
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 1.25rem !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+
+/* ── Search highlight on matched text ── */
+mark.pb-match {
+  background: rgba(232,98,26,.25);
+  color: var(--accent);
+  border-radius: 2px;
+  padding: 0 1px;
+  font-style: normal;
+}
+
+/* ── Cards hidden by filter/search ── */
+.project-card[hidden] { display: none; }
+
+/* ═══════════════════════════════════════════════
+   EMPTY STATE
+════════════════════════════════════════════════ */
+.pb-empty {
+  padding: 5rem 1rem;
+  text-align: center;
+}
+.pb-empty[hidden] { display: none; }
+.pb-empty-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.pb-empty-inner svg {
+  width: 48px; height: 48px;
+  color: var(--text-dim);
+}
+.pb-empty-msg {
+  font-family: var(--font-disp);
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  letter-spacing: .02em;
+}
+.pb-empty-msg span { color: var(--accent); }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .pb-board { grid-template-columns: 1fr 1fr; }
+  .pb-toolbar-inner { gap: .75rem; }
+  .pb-search-wrap { flex: 1 1 100%; }
+}
+@media (max-width: 600px) {
+  .pb-board { grid-template-columns: 1fr; }
+  .pb-filters { gap: .3rem; }
+  .pb-chip { font-size: .72rem; padding: .3rem .7rem; }
+  .pb-count { width: 100%; margin-left: 0; }
+}
