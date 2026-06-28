@@ -1,0 +1,52 @@
+/* ═══════════════════════════════════════════════
+   title-scramble.css
+   Companion styles for title-scramble.js.
+   Add to index.html <head> after style.css.
+════════════════════════════════════════════════ */
+
+/* Each character becomes an inline-block span.
+   font/size/weight all inherit from .hero-name
+   so nothing visually changes once the effect ends. */
+.hs-char {
+  display: inline-block;   /* needed so transform works if you extend it */
+  white-space: pre;        /* stops spans collapsing whitespace            */
+  transition: color 40ms linear;
+}
+
+/* While a character is in the scramble phase:
+   slightly dimmer so the random chars feel like
+   "noise" compared to the locked orange → final colour
+   transition on reveal.                              */
+.hs-char.hs-scrambling {
+  opacity: 0.65;
+}
+
+/* Cursor blink on the leading (not-yet-revealed) edge.
+   We highlight the LAST scrambling char briefly with a
+   blinking underline — gives a "type-head" feel.      */
+.hs-char.hs-scrambling:last-of-type {
+  border-bottom: 2px solid var(--accent);
+  animation: hs-blink 160ms step-end infinite;
+}
+
+@keyframes hs-blink {
+  0%, 100% { border-color: var(--accent); }
+  50%       { border-color: transparent;  }
+}
+
+/* Once done the h1 has no leftover inline styles —
+   this rule makes sure .hero-name still renders
+   exactly as designed with no side effects.          */
+.hero-name .hs-char[style=""] {
+  color: inherit;
+}
+
+/* Reduced motion — skip animation, just show name */
+@media (prefers-reduced-motion: reduce) {
+  .hs-char, .hs-char.hs-scrambling {
+    opacity: 1;
+    animation: none;
+    border-bottom: none;
+    transition: none;
+  }
+}
