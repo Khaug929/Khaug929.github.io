@@ -79,6 +79,123 @@
     </div>
   </nav>
 
+    <!-- ═══════════════════════════════════════
+       SLIDESHOW
+       HOW TO ADD IMAGES:
+       1. Drop any jpg/png/webp into the images/slideshow/ folder
+       2. Add a new <li> inside .ss-track for each image, copying
+          the pattern below — just change the src filename.
+       3. Order in the HTML = order in the rotation.
+       No captions, no links — pure visual.
+  ════════════════════════════════════════ -->
+  <section class="slideshow" id="slideshow" aria-label="Photo slideshow">
+ 
+    <!-- ── Track: one <li> per image ── -->
+    <ul class="ss-track" id="ss-track" role="list">
+ 
+      <!-- SLIDE 1 — EDIT src to your filename -->
+      <li class="ss-slide" role="listitem" aria-hidden="false">
+        <div class="ss-bg-blur" aria-hidden="true"></div>
+        <img class="ss-img" src="images/slideshow/slide1.jpg" alt="" draggable="false">
+      </li>
+ 
+      <!-- SLIDE 2 -->
+      <li class="ss-slide" role="listitem" aria-hidden="true">
+        <div class="ss-bg-blur" aria-hidden="true"></div>
+        <img class="ss-img" src="images/slideshow/slide2.jpg" alt="" draggable="false">
+      </li>
+ 
+      <!-- SLIDE 3 -->
+      <li class="ss-slide" role="listitem" aria-hidden="true">
+        <div class="ss-bg-blur" aria-hidden="true"></div>
+        <img class="ss-img" src="images/slideshow/slide3.jpg" alt="" draggable="false">
+      </li>
+ 
+      <!-- SLIDE 4 -->
+      <li class="ss-slide" role="listitem" aria-hidden="true">
+        <div class="ss-bg-blur" aria-hidden="true"></div>
+        <img class="ss-img" src="images/slideshow/slide4.jpg" alt="" draggable="false">
+      </li>
+ 
+      <!-- SLIDE 5 -->
+      <li class="ss-slide" role="listitem" aria-hidden="true">
+        <div class="ss-bg-blur" aria-hidden="true"></div>
+        <img class="ss-img" src="images/slideshow/slide5.jpg" alt="" draggable="false">
+      </li>
+ 
+      <!-- ADD MORE SLIDES: copy any <li> block above and change the src -->
+ 
+    </ul>
+ 
+    <!-- ── Left arrow ── -->
+    <button class="ss-arrow ss-arrow-prev" id="ss-prev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+ 
+    <!-- ── Right arrow ── -->
+    <button class="ss-arrow ss-arrow-next" id="ss-next" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+ 
+    <!-- ── Fullscreen button ── -->
+    <button class="ss-fullscreen-btn" id="ss-fullscreen-btn" aria-label="Open fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 3 21 3 21 9"/>
+        <polyline points="9 21 3 21 3 15"/>
+        <line x1="21" y1="3" x2="14" y2="10"/>
+        <line x1="3" y1="21" x2="10" y2="14"/>
+      </svg>
+    </button>
+ 
+    <!-- ── Dot indicators ── -->
+    <div class="ss-dots" id="ss-dots" role="tablist" aria-label="Slideshow navigation"></div>
+ 
+    <!-- ── Progress bar (auto-advance timer) ── -->
+    <div class="ss-progress" id="ss-progress" aria-hidden="true">
+      <div class="ss-progress-bar" id="ss-progress-bar"></div>
+    </div>
+ 
+  </section>
+ 
+  <!-- ═══════════════════════════════════════
+       FULLSCREEN LIGHTBOX
+       Opened by the ⤢ button or double-clicking a slide.
+       Closed by Escape, clicking outside the image, or the × button.
+  ════════════════════════════════════════ -->
+  <div class="ss-lightbox" id="ss-lightbox" role="dialog"
+       aria-modal="true" aria-label="Fullscreen image viewer" hidden>
+    <button class="ss-lb-close" id="ss-lb-close" aria-label="Close fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <button class="ss-lb-arrow ss-lb-prev" id="ss-lb-prev" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <div class="ss-lb-img-wrap">
+      <img class="ss-lb-img" id="ss-lb-img" src="" alt="">
+    </div>
+    <button class="ss-lb-arrow ss-lb-next" id="ss-lb-next" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+    <div class="ss-lb-counter" id="ss-lb-counter" aria-live="polite"></div>
+  </div>
+ 
   <!-- ═══════════════════════════════════════
        HERO — split layout: photo left, text right
   ════════════════════════════════════════ -->

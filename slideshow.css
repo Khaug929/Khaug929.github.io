@@ -1,0 +1,379 @@
+/* ═══════════════════════════════════════════════
+   slideshow.css
+   Drop-in styles for the homepage slideshow section.
+   Add to index.html <head>:
+     <link rel="stylesheet" href="slideshow.css">
+════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════
+   SLIDESHOW SECTION
+════════════════════════════════════════════════ */
+.slideshow {
+  position: relative;
+  width: 100%;
+  /* Height: fixed viewport-relative band. Adjust this one value to
+     make the slideshow taller or shorter. 72vh is a good default. */
+  height: 72vh;
+  min-height: 340px;
+  max-height: 860px;
+  background: #0e0c0a;
+  overflow: hidden;
+  /* Sits directly below the fixed navbar */
+  margin-top: var(--nav-h);
+  /* Subtle bottom border to separate from hero */
+  border-bottom: 2px solid var(--accent);
+  /* Pause cursor hint */
+  cursor: default;
+  /* Touch targets don't interfere with scroll */
+  touch-action: pan-y;
+}
+
+/* ── Track ── */
+.ss-track {
+  list-style: none;
+  margin: 0; padding: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ═══════════════════════════════════════════════
+   INDIVIDUAL SLIDE
+   Each slide is absolutely stacked on top of each
+   other. JS toggles .ss-active / .ss-exit classes.
+════════════════════════════════════════════════ */
+.ss-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Hidden by default */
+  opacity: 0;
+  pointer-events: none;
+  /* Cross-fade transition */
+  transition: opacity .65s ease;
+}
+.ss-slide.ss-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+.ss-slide.ss-exit {
+  opacity: 0;
+  z-index: 0;
+}
+
+/* ── Blurred background fill ──
+   Solves the aspect-ratio mismatch problem:
+   the image's own pixels, scaled up and blurred,
+   fill the letterbox/pillarbox bars so there are
+   never ugly black gaps on wide or tall images.   */
+.ss-bg-blur {
+  position: absolute;
+  inset: -20px; /* slight overscan to hide blur edges */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(28px) brightness(.45) saturate(1.1);
+  transform: scale(1.05); /* stop blur from revealing edges */
+  z-index: 0;
+  /* bg-image set by JS to match the slide's <img> src */
+}
+
+/* ── Main image ──
+   Uses object-fit:contain so the full image is always
+   visible regardless of its aspect ratio.           */
+.ss-img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  /* Never overflow the slide */
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  /* Prevent stretching */
+  object-fit: contain;
+  /* Smooth image rendering */
+  image-rendering: auto;
+  /* Block-level so no baseline gap */
+  vertical-align: middle;
+  /* Crisp edges on upscale */
+  -webkit-font-smoothing: antialiased;
+  /* Very subtle shadow to lift image off blurred bg */
+  filter: drop-shadow(0 4px 32px rgba(0,0,0,.55));
+  /* Scale-in on become active */
+  transition: transform .65s ease, filter .65s ease;
+  transform: scale(1);
+  user-select: none;
+}
+/* Zoom VERY slightly when slide is active (adds life) */
+.ss-slide.ss-active .ss-img {
+  transform: scale(1.012);
+}
+
+/* ═══════════════════════════════════════════════
+   ARROWS
+════════════════════════════════════════════════ */
+.ss-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.18);
+  background: rgba(28,26,24,.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background var(--trans), border-color var(--trans),
+              transform .18s ease, opacity var(--trans);
+  opacity: .7;
+}
+.ss-arrow svg { width: 22px; height: 22px; flex-shrink: 0; }
+.ss-arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.08);
+}
+.ss-arrow:active { transform: translateY(-50%) scale(.96); }
+.ss-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.ss-arrow-prev { left: 1.25rem; }
+.ss-arrow-next { right: 1.25rem; }
+
+/* Hide arrows on very small screens — swipe works instead */
+@media (max-width: 400px) {
+  .ss-arrow { display: none; }
+}
+
+/* ═══════════════════════════════════════════════
+   FULLSCREEN BUTTON (top-right corner)
+════════════════════════════════════════════════ */
+.ss-fullscreen-btn {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  z-index: 10;
+  width: 38px; height: 38px;
+  border-radius: var(--radius);
+  border: 1.5px solid rgba(255,255,255,.18);
+  background: rgba(28,26,24,.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: .55;
+  transition: background var(--trans), border-color var(--trans),
+              opacity var(--trans), transform .18s ease;
+}
+.ss-fullscreen-btn svg { width: 16px; height: 16px; }
+.ss-fullscreen-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  opacity: 1;
+  transform: scale(1.1);
+}
+.ss-fullscreen-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ═══════════════════════════════════════════════
+   DOT INDICATORS (bottom centre)
+════════════════════════════════════════════════ */
+.ss-dots {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: .45rem;
+  align-items: center;
+}
+/* Individual dots are injected by JS */
+.ss-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.3);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--trans), transform var(--trans), width var(--trans);
+  flex-shrink: 0;
+}
+.ss-dot.ss-dot-active {
+  background: var(--accent);
+  width: 20px;          /* active dot stretches into a pill */
+  border-radius: 4px;
+}
+.ss-dot:hover:not(.ss-dot-active) { background: rgba(255,255,255,.6); }
+.ss-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* ═══════════════════════════════════════════════
+   PROGRESS BAR (auto-advance timer)
+   Thin line along the very bottom of the slideshow.
+   JS restarts the animation on each slide change.
+════════════════════════════════════════════════ */
+.ss-progress {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(255,255,255,.08);
+  z-index: 10;
+  overflow: hidden;
+}
+.ss-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  /* Duration is set by JS to match INTERVAL constant */
+  transition: width linear;
+}
+
+/* ═══════════════════════════════════════════════
+   FULLSCREEN LIGHTBOX
+════════════════════════════════════════════════ */
+.ss-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10,8,6,.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Animate in */
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+/* JS removes [hidden] and adds .ss-lb-open */
+.ss-lightbox.ss-lb-open {
+  opacity: 1;
+}
+/* While hidden attribute is set, don't take up space */
+.ss-lightbox[hidden] { display: none; }
+
+/* Image wrapper — constrains image inside viewport */
+.ss-lb-img-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 4rem 6rem; /* room for arrows */
+  box-sizing: border-box;
+}
+.ss-lb-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 64px rgba(0,0,0,.7);
+  /* Smooth slide transition in lightbox */
+  transition: opacity .2s ease, transform .2s ease;
+  user-select: none;
+}
+.ss-lb-img.ss-lb-fade {
+  opacity: 0;
+  transform: scale(.97);
+}
+
+/* Close button */
+.ss-lb-close {
+  position: fixed;
+  top: 1.25rem; right: 1.25rem;
+  z-index: 10;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.2);
+  background: rgba(28,26,24,.7);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background var(--trans), border-color var(--trans), transform .18s ease;
+}
+.ss-lb-close svg { width: 20px; height: 20px; }
+.ss-lb-close:hover { background: var(--accent); border-color: var(--accent); transform: scale(1.1); }
+.ss-lb-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Lightbox arrows */
+.ss-lb-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.18);
+  background: rgba(28,26,24,.6);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background var(--trans), border-color var(--trans),
+              transform .18s ease, opacity var(--trans);
+  opacity: .7;
+}
+.ss-lb-arrow svg { width: 24px; height: 24px; }
+.ss-lb-arrow:hover { background: var(--accent); border-color: var(--accent); opacity: 1; }
+.ss-lb-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ss-lb-prev { left: 1rem; }
+.ss-lb-next { right: 1rem; }
+
+/* Counter — "3 / 5" */
+.ss-lb-counter {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-disp);
+  font-size: .85rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.4);
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════════ */
+@media (max-width: 700px) {
+  .slideshow {
+    height: 52vw;
+    min-height: 220px;
+    max-height: 480px;
+  }
+  .ss-lb-img-wrap { padding: 3.5rem 3.5rem; }
+  .ss-lb-prev { left: .25rem; }
+  .ss-lb-next { right: .25rem; }
+}
+
+/* ═══════════════════════════════════════════════
+   REDUCED MOTION
+   Respect the system preference: disable all
+   animations but keep the slideshow functional.
+════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .ss-slide { transition: none; }
+  .ss-img   { transition: none; }
+  .ss-slide.ss-active .ss-img { transform: none; }
+  .ss-lb-img { transition: none; }
+  .ss-progress-bar { transition: none; }
+}
