@@ -4,36 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- EDIT: Update this title for each project -->
-  <title>Project Title — Your Name</title>
+  <title>Vulkan — Tap Off Torch Igniter</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="project.css">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="../projects.css">
 </head>
 <body>
 
   <!-- NAVBAR (same on every page) -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">YN<span class="logo-dot">.</span></a>
+      <a href="../../index.html" class="nav-logo">KH<span class="logo-dot">.</span></a>
       <ul class="nav-links">
-        <li><a href="index.html" class="nav-link">Home</a></li>
-        <li><a href="projects.html" class="nav-link active">Projects</a></li>
-        <li><a href="updates.html" class="nav-link">Updates</a></li>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="../../index.html" class="nav-link">Home</a></li>
+        <li><a href="../index.html" class="nav-link active">Projects</a></li>
+        <li><a href="../../updates/index.html" class="nav-link">Updates</a></li>
+        <li><a href="../../about/index.html" class="nav-link">About</a></li>
+        <li><a href="../../contact/index.html" class="nav-link">Contact</a></li>
       </ul>
       <button class="nav-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </button>
     </div>
     <ul class="nav-mobile" id="nav-mobile">
-      <li><a href="index.html"    class="nav-link" onclick="toggleMenu()">Home</a></li>
-      <li><a href="projects.html" class="nav-link" onclick="toggleMenu()">Projects</a></li>
-      <li><a href="updates.html"  class="nav-link" onclick="toggleMenu()">Updates</a></li>
-      <li><a href="about.html"    class="nav-link" onclick="toggleMenu()">About</a></li>
-      <li><a href="contact.html"  class="nav-link" onclick="toggleMenu()">Contact</a></li>
+      <li><a href="../../index.html"    class="nav-link" onclick="toggleMenu()">Home</a></li>
+      <li><a href="../index.html" class="nav-link" onclick="toggleMenu()">Projects</a></li>
+      <li><a href="../../updates/index.html"  class="nav-link" onclick="toggleMenu()">Updates</a></li>
+      <li><a href="../../about/index.html"    class="nav-link" onclick="toggleMenu()">About</a></li>
+      <li><a href="../../contact/index.html"  class="nav-link" onclick="toggleMenu()">Contact</a></li>
     </ul>
   </nav>
 
@@ -54,9 +54,9 @@
         <div class="container">
           <div class="project-hero-text">
             <a href="projects.html" class="back-link">← Projects</a>
-            <span class="card-tag" style="position:static;margin-bottom:.75rem;display:inline-block">Mechanical</span>
+            <span class="card-tag" style="position:static;margin-bottom:.75rem;display:inline-block">Propulsion</span>
             <!-- EDIT: Project title -->
-            <h1 class="project-title">Project Title One</h1>
+            <h1 class="project-title">Vulkan - Tap Off Torch Igniter</h1>
           </div>
         </div>
       </div>
@@ -71,11 +71,11 @@
         <aside class="project-sidebar">
           <div class="sidebar-block">
             <span class="sidebar-label">Status</span>
-            <span class="card-status status-complete" style="display:inline-block">Completed</span>
+            <span class="card-status status-complete" style="display:inline-block">In Progress</span>
           </div>
           <div class="sidebar-block">
             <span class="sidebar-label">Year</span>
-            <span class="sidebar-value">2024</span>
+            <span class="sidebar-value">2026</span>
           </div>
           <div class="sidebar-block">
             <span class="sidebar-label">Duration</span>
@@ -83,13 +83,13 @@
           </div>
           <div class="sidebar-block">
             <span class="sidebar-label">Role</span>
-            <span class="sidebar-value">Lead Engineer</span>
+            <span class="sidebar-value">Propulsion Engineer</span>
           </div>
           <div class="sidebar-block">
             <span class="sidebar-label">Tools & Methods</span>
             <div class="card-tags" style="margin-top:.5rem">
-              <span class="tag">SolidWorks</span>
-              <span class="tag">FEA</span>
+              <span class="tag">Onshape</span>
+              <span class="tag">NASA CEARUN</span>
               <span class="tag">Machining</span>
               <span class="tag">Testing</span>
             </div>
@@ -97,7 +97,6 @@
           <!-- EDIT: Add a link to GitHub, report, demo, etc. if available -->
           <div class="sidebar-block">
             <span class="sidebar-label">Links</span>
-            <a href="#" class="sidebar-link" target="_blank" rel="noopener">GitHub →</a>
             <a href="#" class="sidebar-link" target="_blank" rel="noopener">Full Report (PDF) →</a>
           </div>
         </aside>
@@ -136,16 +135,16 @@
             <video
               controls
               preload="metadata"
-              poster="images/vulkan-thumbnail-1.jpg"
+              poster="../../images/vulkan-thumbnail-1.jpg"
               aria-label="36 hot fire tests of the Vulkan tap off torch ignition system"
             >
-              <source src="videos/vulkan-1.mp4"  type="video/mp4">
+              <source src="../../videos/vulkan-1.mp4"  type="video/mp4">
               <!-- .mov fallback — Safari only; omit if you have an .mp4 -->
-              <source src="videos/vulkan_1.mov"  type="video/quicktime">
+              <source src="../../videos/vulkan_1.mov"  type="video/quicktime">
               <!-- Shown if the browser can't play any format -->
               <p>
                 Your browser can't play this video.
-                <a href="videos/vulkan-1.mp4" download>Download it instead.</a>
+                <a href="../../videos/vulkan-1.mp4" download>Download it instead.</a>
               </p>
             </video>
           </div>
@@ -274,7 +273,7 @@
           <!-- Navigation between projects -->
           <div class="proj-nav">
             <a href="project-template.html" class="proj-nav-btn">← Previous project</a>
-            <a href="projects.html"          class="proj-nav-btn">All projects</a>
+            <a href="../index.html"          class="proj-nav-btn">All projects</a>
             <a href="project-template.html" class="proj-nav-btn">Next project →</a>
           </div>
 
@@ -290,13 +289,13 @@
         <div class="footer-links">
           <a href="#" class="footer-link" target="_blank" rel="noopener">GitHub</a>
           <a href="#" class="footer-link" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="contact.html" class="footer-link">Contact</a>
+          <a href="../../contact/index.html" class="footer-link">Contact</a>
         </div>
-        <span class="footer-copy">&copy; 2025</span>
+        <span class="footer-copy">&copy; 2026</span>
       </div>
     </div>
   </footer>
 
-  <script src="main.js"></script>
+  <script src="../../main.js"></script>
 </body>
 </html>
