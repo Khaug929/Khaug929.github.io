@@ -33,7 +33,7 @@
   if (!grid) return;
 
   /* ── Path to the projects board, relative to index.html ── */
-  const PROJECTS_URL = 'projects/';
+  const PROJECTS_URL = 'projects/index.html';
 
   /* ═══════════════════════════════════════════
      FETCH & PARSE
@@ -66,7 +66,7 @@
       });
 
       /* ── Rewrite paths ── */
-      featured.forEach(card => rewritePaths(card, PROJECTS_URL));
+      featured.forEach(card => rewritePaths(card, 'projects/'));
 
       /* ── First card gets the wide "featured" layout ── */
       featured[0].classList.add('featured');
