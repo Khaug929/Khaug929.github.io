@@ -13,7 +13,7 @@
   width: 100%;
   /* Height: fixed viewport-relative band. Adjust this one value to
      make the slideshow taller or shorter. 72vh is a good default. */
-  height: 72vh;
+  height: 50vh;
   min-height: 340px;
   max-height: 860px;
   background: #0e0c0a;
