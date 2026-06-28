@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="slideshow.css">
+  <link rel="stylesheet" href="featured.css">
 </head>
 <body>
 
@@ -18,7 +19,7 @@
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
 
-      <a href="index.html" class="nav-logo">YN<span class="logo-dot">.</span></a>
+      <a href="index.html" class="nav-logo">KH<span class="logo-dot">.</span></a>
 
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html"   class="nav-link active">Home</a></li>
@@ -315,99 +316,62 @@
 
   <!-- ═══════════════════════════════════════
        FEATURED PROJECTS
+       Cards are pulled automatically from projects/index.html.
+       To feature a project: add  data-featured="true"  to its
+       <article> in projects/index.html. To unfeature it: remove
+       that attribute. No changes needed here.
   ════════════════════════════════════════ -->
-  <section class="projects-section">
+  <section class="projects-section" id="featured-section">
     <div class="container">
       <div class="section-header">
         <div>
           <p class="section-eyebrow">Work</p>
           <h2 class="section-title">Featured Projects</h2>
         </div>
-        <a href="projects/index.html" class="see-all-link">See all →</a>
+        <a href="projects/" class="see-all-link">See all →</a>
       </div>
-
-      <div class="projects-grid">
-
-        <!-- ── FEATURED CARD (wide) ── -->
-        <!-- IMAGE: 800×500px recommended. Save to images/project1.jpg -->
-        <article class="project-card featured" data-category="mechanical">
-          <a href="project-template.html" class="card-image-link">
-            <div class="card-image">
-              <img src="images/project1.jpg" alt="Project one overview"
-                   onerror="this.parentElement.classList.add('img-placeholder')">
-              <span class="card-cat">Mechanical</span>
-            </div>
-          </a>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-date">2024</span>
-              <span class="card-status status-complete">Completed</span>
-            </div>
-            <h3 class="card-title"><a href="project-template.html">Project Title One</a></h3>
-            <p class="card-desc">
-              A short description of what this project does and why it matters.
-              Mention the key outcome or technical challenge solved.
-            </p>
-            <div class="card-tags">
-              <span class="tag">CAD</span>
-              <span class="tag">FEA</span>
-              <span class="tag">Prototyping</span>
-            </div>
+ 
+      <!--
+        JS populates this grid from projects/index.html at load time.
+        The loading skeleton below shows while the fetch is in flight.
+        Do not add static cards here — they will be replaced.
+      -->
+      <div class="projects-grid" id="featured-grid">
+ 
+        <!-- Loading skeleton — replaced by real cards once fetch resolves -->
+        <div class="feat-skeleton" aria-hidden="true">
+          <div class="feat-skel-img"></div>
+          <div class="feat-skel-body">
+            <div class="feat-skel-line feat-skel-short"></div>
+            <div class="feat-skel-line feat-skel-long"></div>
+            <div class="feat-skel-line feat-skel-med"></div>
           </div>
-        </article>
-
-        <!-- ── CARD 2 ── -->
-        <article class="project-card" data-category="electrical">
-          <a href="project-template.html" class="card-image-link">
-            <div class="card-image">
-              <img src="images/project2.jpg" alt="Project two overview"
-                   onerror="this.parentElement.classList.add('img-placeholder')">
-              <span class="card-cat">Electrical</span>
-            </div>
-          </a>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-date">2024</span>
-              <span class="card-status status-progress">In Progress</span>
-            </div>
-            <h3 class="card-title"><a href="project-template.html">Project Title Two</a></h3>
-            <p class="card-desc">Description of your second project. What problem did it solve?</p>
-            <div class="card-tags">
-              <span class="tag">PCB</span>
-              <span class="tag">Embedded</span>
-              <span class="tag">Power</span>
-            </div>
+        </div>
+        <div class="feat-skeleton feat-skeleton-sm" aria-hidden="true">
+          <div class="feat-skel-img"></div>
+          <div class="feat-skel-body">
+            <div class="feat-skel-line feat-skel-short"></div>
+            <div class="feat-skel-line feat-skel-long"></div>
           </div>
-        </article>
-
-        <!-- ── CARD 3 ── -->
-        <article class="project-card" data-category="software">
-          <a href="project-template.html" class="card-image-link">
-            <div class="card-image">
-              <img src="images/project3.jpg" alt="Project three overview"
-                   onerror="this.parentElement.classList.add('img-placeholder')">
-              <span class="card-cat">Software</span>
-            </div>
-          </a>
-          <div class="card-body">
-            <div class="card-meta">
-              <span class="card-date">2023</span>
-              <span class="card-status status-complete">Completed</span>
-            </div>
-            <h3 class="card-title"><a href="project-template.html">Project Title Three</a></h3>
-            <p class="card-desc">Description of your third project. Core idea and one standout detail.</p>
-            <div class="card-tags">
-              <span class="tag">Python</span>
-              <span class="tag">Sensors</span>
-              <span class="tag">Control</span>
-            </div>
+        </div>
+        <div class="feat-skeleton feat-skeleton-sm" aria-hidden="true">
+          <div class="feat-skel-img"></div>
+          <div class="feat-skel-body">
+            <div class="feat-skel-line feat-skel-short"></div>
+            <div class="feat-skel-line feat-skel-long"></div>
           </div>
-        </article>
-
-      </div><!-- /projects-grid -->
+        </div>
+ 
+      </div><!-- /featured-grid -->
+ 
+      <!-- Shown if fetch fails or no featured cards exist -->
+      <p class="feat-fallback" id="feat-fallback" hidden>
+        <a href="projects/" class="see-all-link">Browse all projects →</a>
+      </p>
+ 
     </div>
   </section>
-
+ 
   <!-- ═══════════════════════════════════════
        LATEST UPDATE
   ════════════════════════════════════════ -->

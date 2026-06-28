@@ -1,0 +1,102 @@
+/* ═══════════════════════════════════════════════
+   featured.css
+   Skeleton loader shown while featured.js fetches
+   projects/index.html. Loaded only on index.html.
+════════════════════════════════════════════════ */
+
+/* ── Shimmer keyframe ── */
+@keyframes feat-shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+
+/* ── Base skeleton block ── */
+.feat-skeleton {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* First skeleton mirrors the wide "featured" card layout */
+.feat-skeleton:first-child {
+  grid-column: 1 / -1;
+  flex-direction: row;
+}
+.feat-skeleton:first-child .feat-skel-img {
+  width: 60%;
+  height: 380px;
+  flex-shrink: 0;
+  border-radius: 0;
+}
+.feat-skeleton:first-child .feat-skel-body {
+  padding: 2.5rem;
+  flex: 1;
+}
+
+/* Smaller skeletons for the remaining cards */
+.feat-skeleton-sm .feat-skel-img { height: 220px; }
+
+/* Shimmer surface applied to image placeholder */
+.feat-skel-img {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card-2) 25%,
+    var(--border-lit) 50%,
+    var(--bg-card-2) 75%
+  );
+  background-size: 600px 100%;
+  animation: feat-shimmer 1.6s infinite linear;
+}
+
+/* Body area of skeleton */
+.feat-skel-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+/* Text line skeletons */
+.feat-skel-line {
+  height: 12px;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-card-2) 25%,
+    var(--border-lit) 50%,
+    var(--bg-card-2) 75%
+  );
+  background-size: 600px 100%;
+  animation: feat-shimmer 1.6s infinite linear;
+}
+.feat-skel-short { width: 30%; }
+.feat-skel-med   { width: 55%; }
+.feat-skel-long  { width: 85%; }
+
+/* ── Fallback link (shown if fetch fails) ── */
+.feat-fallback {
+  text-align: center;
+  padding: 2rem 0;
+}
+.feat-fallback[hidden] { display: none; }
+
+/* ── Respect reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .feat-skel-img,
+  .feat-skel-line { animation: none; }
+}
+
+/* ── Responsive skeleton ── */
+@media (max-width: 900px) {
+  .feat-skeleton:first-child {
+    flex-direction: column;
+  }
+  .feat-skeleton:first-child .feat-skel-img {
+    width: 100%;
+    height: 260px;
+  }
+}

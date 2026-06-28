@@ -167,6 +167,11 @@
              data-title     — project title (used for A→Z tiebreak)
              data-summary   — full searchable text: title + description +
                               tags all in one string (search scrubs this)
+             data-featured  — add  data-featured="true"  to also show this
+                              card in the Featured Projects section on the
+                              homepage. Remove the attribute (or set "false")
+                              to unfeature it. The homepage updates on its
+                              next page load automatically.
 
         3. Set href on the card link to the subfolder path:
              propulsion/vulkan.html
@@ -191,6 +196,7 @@
                data-category="propulsion"
                data-date="2024-09"
                data-title="Vulkan Engine"
+               data-featured="true"
                data-summary="Vulkan Engine propulsion liquid rocket engine thrust chamber combustion ignition test stand hot fire nozzle injector 2024">
         <a href="propulsion/vulkan.html" class="card-image-link">
           <div class="card-image">
@@ -205,7 +211,7 @@
             <span class="card-date">2024</span>
             <span class="card-status status-progress">In Progress</span>
           </div>
-          <h2 class="card-title"><a href="propulsion/vulkan.html">Vulkan Engine</a></h2>
+          <h2 class="card-title"><a href="propulsion/vulkan.html">Vulkan Igniter</a></h2>
           <p class="card-desc">
             <!-- EDIT: 1–2 sentence project summary. This text is scraped by search. -->
             Development of a liquid bipropellant rocket engine including thrust chamber design,
@@ -226,6 +232,7 @@
                data-category="mechanical"
                data-date="2024-06"
                data-title="Robotic Arm"
+               data-featured="true"
                data-summary="Robotic arm mechanical design 6-DOF manipulation servo actuation FEA structural analysis fabrication CNC 2024">
         <a href="mechanical/robotic-arm.html" class="card-image-link">
           <div class="card-image">
