@@ -40,11 +40,29 @@
   let isRunning  = AUTOPLAY;
   let lbOpen     = false;
 
-  /* ── Hide slides whose image fails to load ── */
+  /* ═══════════════════════════════════════════
+     BLUR BACKGROUND SETUP
+     Copy each slide's image src into its .ss-bg-blur
+     as a background-image so the blurred fill matches.
+  ══════════════════════════════════════════════ */
   slides.forEach(slide => {
-    const img = slide.querySelector('.ss-img');
-    if (!img) return;
-    img.addEventListener('error', () => { slide.style.display = 'none'; });
+    const img  = slide.querySelector('.ss-img');
+    const blur = slide.querySelector('.ss-bg-blur');
+    if (!img || !blur) return;
+
+    function applyBlur() {
+      blur.style.backgroundImage = `url('${img.src}')`;
+    }
+
+    if (img.complete && img.naturalWidth) {
+      applyBlur();
+    } else {
+      img.addEventListener('load', applyBlur);
+      img.addEventListener('error', () => {
+        /* If image fails, hide the slide gracefully */
+        slide.style.display = 'none';
+      });
+    }
   });
 
   /* ═══════════════════════════════════════════
