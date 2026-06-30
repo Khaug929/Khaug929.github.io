@@ -47,6 +47,54 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
+
+/* ── Dot grid background ── */
+.dot-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /*
+    The grid is a CSS radial-gradient repeated as a pattern.
+    Each cell is GRID_SIZE × GRID_SIZE px.
+    The dot is a circle at the centre of each cell.
+
+    TUNING:
+      --dg-size     px — cell size (gap between dots). Larger = more spread out.
+      --dg-dot      px — dot radius. Keep well below half of --dg-size.
+      --dg-opacity      — 0.0 → 1.0. Start very low (0.06–0.12).
+      --dg-color        — dot colour. Keep as the accent with low opacity.
+  */
+  --dg-size:    35px;
+  --dg-dot:     1.5px;
+  --dg-opacity: 0.12;
+  --dg-color:   rgba(232, 98, 26, var(--dg-opacity));
+
+  background-image: radial-gradient(
+    circle,
+    var(--dg-color) var(--dg-dot),
+    transparent    var(--dg-dot)
+  );
+  background-size: var(--dg-size) var(--dg-size);
+  background-position: center center;
+}
+
+/* Fade the grid out toward the bottom of the page
+   so it doesn't compete with content-heavy sections */
+.dot-grid::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 45%,
+    var(--bg)   100%
+  );
+}
+
 img { display: block; width: 100%; height: 100%; object-fit: cover; }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
